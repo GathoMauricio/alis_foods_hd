@@ -21,6 +21,15 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('editar_usuarios/{id}', [App\Http\Controllers\UserController::class, 'edit'])->name('editar_usuarios')->middleware('permission:editar_usuarios');
     Route::put('update_usuarios/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('update_usuarios')->middleware('permission:editar_usuarios');
     Route::delete('eliminar_usuarios/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('eliminar_usuarios')->middleware('permission:eliminar_usuarios');
+
+    //Sucursales
+    Route::get('sucursales', [App\Http\Controllers\SucursalController::class, 'index'])->name('sucursales')->middleware('permission:modulo_sucursales');
+    Route::get('detalle_sucursales/{id?}', [App\Http\Controllers\SucursalController::class, 'show'])->name('detalle_sucursales')->middleware('permission:detalle_sucursales');
+    Route::get('crear_sucursales', [App\Http\Controllers\SucursalController::class, 'create'])->name('crear_sucursales')->middleware('permission:crear_sucursales');
+    Route::post('store_sucursales', [App\Http\Controllers\SucursalController::class, 'store'])->name('store_sucursales')->middleware('permission:crear_sucursales');
+    Route::get('editar_sucursales/{id}', [App\Http\Controllers\SucursalController::class, 'edit'])->name('editar_sucursales')->middleware('permission:editar_sucursales');
+    Route::put('update_sucursales/{id}', [App\Http\Controllers\SucursalController::class, 'update'])->name('update_sucursales')->middleware('permission:editar_sucursales');
+    Route::delete('eliminar_sucursales/{id}', [App\Http\Controllers\SucursalController::class, 'destroy'])->name('eliminar_sucursales')->middleware('permission:eliminar_sucursales');
 });
 
 

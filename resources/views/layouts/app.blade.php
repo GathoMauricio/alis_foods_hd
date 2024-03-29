@@ -97,41 +97,12 @@
                                             Usuarios
                                         </a>
                                     @endcan
-                                    @can('modulo_residencias')
-                                        <a class="dropdown-item" href="{{ route('residencias') }}">
-                                            Residencias
+                                    @can('modulo_sucursales')
+                                        <a class="dropdown-item" href="{{ route('sucursales') }}">
+                                            Sucursales
                                         </a>
                                     @endcan
-                                    @can('modulo_habitaciones')
-                                        <a class="dropdown-item" href="{{ route('habitaciones') }}">
-                                            Habitaciones
-                                        </a>
-                                    @endcan
-                                    @can('modulo_pagos')
-                                        <a class="dropdown-item" href="{{ route('pagos') }}">
-                                            Pagos
-                                        </a>
-                                    @endcan
-                                    @can('modulo_reportes')
-                                        <a class="dropdown-item" href="{{ route('reportes') }}">
-                                            Reportes
-                                        </a>
-                                    @endcan
-                                    @can('modulo_amenidades')
-                                        <a class="dropdown-item" href="{{ route('amenidades') }}">
-                                            Amenidades
-                                        </a>
-                                    @endcan
-                                    @can('modulo_tablero')
-                                        <a class="dropdown-item" href="{{ route('tablero') }}">
-                                            Tablero
-                                        </a>
-                                    @endcan
-                                    @can('modulo_mensajeria')
-                                        <a class="dropdown-item" href="{{ route('mensajeria') }}">
-                                            Mansajeria
-                                        </a>
-                                    @endcan
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
