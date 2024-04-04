@@ -15,4 +15,9 @@ class Categoria extends Model
     public $timestamps = true;
 
     protected $fillable = ['nombre'];
+
+    public function subcategorias()
+    {
+        return $this->hasMany('App\Models\Subcategoria', 'categoria_id');
+    }
 }
