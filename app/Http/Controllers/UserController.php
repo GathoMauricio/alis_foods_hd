@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
+use App\Models\Categoria;
+use App\Models\Sucursal;
 
 class UserController extends Controller
 {
@@ -24,7 +26,9 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::all();
-        return view('usuarios.create', compact('roles'));
+        $categorias = Categoria::orderBy('nombre')->get();
+        $sucursales = Sucursal::orderBy('nombre')->get();
+        return view('usuarios.create', compact('roles', 'categorias', 'sucursales'));
     }
 
     public function store(Request $request)
@@ -51,6 +55,8 @@ class UserController extends Controller
         ]);
 
         $usuario = User::create([
+            'categoria_id' => $request->categoria_id,
+            'sucursal_id' => $request->sucursal_id,
             'name' => $request->name,
             'apaterno' => $request->apaterno,
             'amaterno' => $request->amaterno,
@@ -72,7 +78,9 @@ class UserController extends Controller
     {
         $roles = Role::all();
         $usuario = User::find($id);
-        return view('usuarios.edit', compact('roles', 'usuario'));
+        $categorias = Categoria::orderBy('nombre')->get();
+        $sucursales = Sucursal::orderBy('nombre')->get();
+        return view('usuarios.edit', compact('roles', 'usuario', 'categorias', 'sucursales'));
     }
 
     public function update(Request $request, $id)
@@ -102,6 +110,8 @@ class UserController extends Controller
 
         $usuario = User::find($id);
 
+        $usuario->categoria_id = $request->categoria_id;
+        $usuario->sucursal_id = $request->sucursal_id;
         $usuario->name = $request->name;
         $usuario->apaterno = $request->apaterno;
         $usuario->amaterno = $request->amaterno;

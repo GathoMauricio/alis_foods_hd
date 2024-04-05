@@ -26,6 +26,31 @@
                 </div>
                 <br>
                 <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="categoria_id">Categoráa (Solo si es técnico)</label>
+                            <select name="categoria_id" class="form-select select2">
+                                <option value>--Seleccione--</option>
+                                @foreach ($categorias as $categoria)
+                                    <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="sucursal_id">Sucursal (Solo si es gerente)</label>
+                            <select name="sucursal_id" class="form-select select2">
+                                <option value>--Seleccione--</option>
+                                @foreach ($sucursales as $sucursal)
+                                    <option value="{{ $sucursal->id }}">{{ $sucursal->nombre }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="name">Nombre</label>

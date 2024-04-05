@@ -18,12 +18,17 @@ class PermisoSeeder extends Seeder
         ##################CREAR ROLES #############################
         $super_usuario = Role::create(['name' => 'Super usuario']);
         $administrador = Role::create(['name' => 'Administrador']);
-        $gerente_general = Role::create(['name' => 'Gerente general']);
-        $gerente_turno = Role::create(['name' => 'Gerente en turno']);
-        $gerente_satelital = Role::create(['name' => 'Gerente satelital']);
+        $tecnico = Role::create(['name' => 'Técnico']);
+        $gerente = Role::create(['name' => 'Gerente']);
+        //$gerente_general = Role::create(['name' => 'Gerente general']);
+        //$gerente_turno = Role::create(['name' => 'Gerente en turno']);
+        //$gerente_satelital = Role::create(['name' => 'Gerente satelital']);
 
         #################CREAR PERMISOS############################
         Permission::create(['name' => 'modulo_roles_permisos']);
+
+        //Tickets
+        Permission::create(['name' => 'crear_tickets']);
 
         //Usuarios
         Permission::create(['name' => 'modulo_usuarios']);
@@ -41,6 +46,9 @@ class PermisoSeeder extends Seeder
 
         #Asignar permisos al super usuario
         $super_usuario->givePermissionTo('modulo_roles_permisos');
+
+        //Permisos Tickets
+        $super_usuario->givePermissionTo('crear_tickets');
 
         //Permisos Usuarios
         $super_usuario->givePermissionTo('modulo_usuarios');
@@ -65,5 +73,11 @@ class PermisoSeeder extends Seeder
         $administrador->givePermissionTo('crear_sucursales');
         $administrador->givePermissionTo('editar_sucursales');
         $administrador->givePermissionTo('eliminar_sucursales');
+
+
+        #Asignar permisos al gerente
+
+        //Permisos Tickets
+        $gerente->givePermissionTo('crear_tickets');
     }
 }

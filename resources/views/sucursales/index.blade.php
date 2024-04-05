@@ -6,7 +6,7 @@
             @can('crear_sucursales')
                 <div style="float: right;">
                     <a href="{{ route('crear_sucursales') }}" class="btn btn-primary" title="Nuevo"><i
-                            class="icon icon-user-plus"></i></a>
+                            class="icon icon-plus"></i></a>
                 </div>
             @endcan
             Sucursales

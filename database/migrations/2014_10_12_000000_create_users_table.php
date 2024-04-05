@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->bigInteger('categoria_id')->nullable();
             $table->string('name');
             $table->string('apaterno');
-            $table->string('amaterno');
+            $table->string('amaterno')->nullable();
             $table->string('email')->unique();
             $table->string('telefono')->nullable();
             $table->string('telefono_emergencia')->nullable();

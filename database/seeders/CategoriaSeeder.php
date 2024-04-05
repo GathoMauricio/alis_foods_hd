@@ -94,7 +94,7 @@ class CategoriaSeeder extends Seeder
         $sin = Sintoma::create(['servicio_id' => $s->id, 'nombre' => 'FALLA GENERAL EN LA OPERACION DEL SERVICIO']);
 
 
-        Categoria::create(['nombre' => 'CATEGORÍA TEST UNO']);
-        Categoria::create(['nombre' => 'CATEGORÍA TEST DOS']);
+        //Categoria::create(['nombre' => 'CATEGORÍA TEST UNO']);
+        //Categoria::create(['nombre' => 'CATEGORÍA TEST DOS']);
     }
 }

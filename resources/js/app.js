@@ -1,4 +1,5 @@
 require("./bootstrap");
+import axios from "axios";
 $(document).ready(function () {
     $(".select2").select2();
 });

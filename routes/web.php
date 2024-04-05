@@ -6,8 +6,11 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes(['register' => false]);
 
 Route::group(['middleware' => ['auth']], function () {
-    //Home
-    Route::view('home', 'home')->name('home');
+    //Home (Tickets)
+    //Route::view('home', 'home')->name('home');
+    Route::get('home', [App\Http\Controllers\TicketController::class, 'index'])->name('home');
+    Route::get('crear_tickets', [App\Http\Controllers\TicketController::class, 'create'])->name('crear_tickets')->middleware('permission:crear_tickets');
+    Route::post('store_tickets', [App\Http\Controllers\TicketController::class, 'store'])->name('store_tickets');
 
     //Roles y permisos
     Route::get('roles_permisos', [App\Http\Controllers\RolesPermisosController::class, 'index'])->name('roles_permisos')->middleware('permission:modulo_roles_permisos');
@@ -30,6 +33,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('editar_sucursales/{id}', [App\Http\Controllers\SucursalController::class, 'edit'])->name('editar_sucursales')->middleware('permission:editar_sucursales');
     Route::put('update_sucursales/{id}', [App\Http\Controllers\SucursalController::class, 'update'])->name('update_sucursales')->middleware('permission:editar_sucursales');
     Route::delete('eliminar_sucursales/{id}', [App\Http\Controllers\SucursalController::class, 'destroy'])->name('eliminar_sucursales')->middleware('permission:eliminar_sucursales');
+
+    #AxiosData
+    Route::get('cargar_subcategorias', [App\Http\Controllers\AxiosController::class, 'cargarSubcategorias'])->name('cargar_subcategorias');
+    Route::get('cargar_servicios', [App\Http\Controllers\AxiosController::class, 'cargarServicios'])->name('cargar_servicios');
+    Route::get('cargar_sintomas', [App\Http\Controllers\AxiosController::class, 'cargarSintomas'])->name('cargar_sintomas');
+    Route::get('cargar_sugerencia', [App\Http\Controllers\AxiosController::class, 'cargarSugerencia'])->name('cargar_sugerencia');
 });
 
 

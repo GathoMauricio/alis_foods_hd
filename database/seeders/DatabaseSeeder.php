@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // User::factory(10)->create();
+        $this->call(TicketEstatusSeeder::class);
         $this->call(CategoriaSeeder::class);
         $this->call(SucursalSeeder::class);
         $this->call(PermisoSeeder::class);
