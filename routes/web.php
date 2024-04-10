@@ -7,7 +7,6 @@ Auth::routes(['register' => false]);
 
 Route::group(['middleware' => ['auth']], function () {
     //Home (Tickets)
-    //Route::view('home', 'home')->name('home');
     Route::get('home', [App\Http\Controllers\TicketController::class, 'index'])->name('home');
     Route::get('crear_tickets', [App\Http\Controllers\TicketController::class, 'create'])->name('crear_tickets')->middleware('permission:crear_tickets');
     Route::post('store_tickets', [App\Http\Controllers\TicketController::class, 'store'])->name('store_tickets');

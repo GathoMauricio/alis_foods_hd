@@ -79,8 +79,7 @@
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle text-primary"
                                     style="font-weight: bold;" href="#" role="button" data-bs-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} {{ Auth::user()->middle_name }}
-                                    {{ Auth::user()->last_name }}
+                                    {{ Auth::user()->name }} {{ Auth::user()->apaterno }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

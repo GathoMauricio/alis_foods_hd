@@ -14,7 +14,7 @@ class TicketController extends Controller
         $tickets = Ticket::where('estatus_id', '<', 4);
 
         if (Auth::user()->hasRole('Gerente')) {
-            $tickets = $tickets->where('author_id', Auth::user()->id);
+            $tickets = $tickets->where('autor_id', Auth::user()->id);
         }
 
         if (Auth::user()->hasRole('Técnico')) {

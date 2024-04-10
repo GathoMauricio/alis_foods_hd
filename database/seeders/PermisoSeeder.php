@@ -74,6 +74,13 @@ class PermisoSeeder extends Seeder
         $administrador->givePermissionTo('editar_sucursales');
         $administrador->givePermissionTo('eliminar_sucursales');
 
+        //permisos usuarios
+        $administrador->givePermissionTo('modulo_usuarios');
+        $administrador->givePermissionTo('detalle_usuarios');
+        //$administrador->givePermissionTo('crear_usuarios');
+        $administrador->givePermissionTo('editar_usuarios');
+        //$administrador->givePermissionTo('eliminar_usuarios');
+
 
         #Asignar permisos al gerente
 

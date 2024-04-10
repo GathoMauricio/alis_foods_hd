@@ -49,4 +49,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function sucursal()
+    {
+        return $this->belongsTo(
+            'App\Models\Sucursal',
+            'sucursal_id',
+            'id'
+        )
+            ->withDefault();
+    }
+
+    public function categoria()
+    {
+        return $this->belongsTo(
+            'App\Models\Categoria',
+            'categoria_id',
+            'id'
+        )
+            ->withDefault();
+    }
 }

@@ -46,7 +46,17 @@
                                 {{ $rol->name }}<br>
                             @endforeach
                         </td>
-                        <td>{{ $usuario->name }} {{ $usuario->apaterno }} {{ $usuario->amaterno }}</td>
+                        <td>
+                            {{ $usuario->name }} {{ $usuario->apaterno }} {{ $usuario->amaterno }}
+                            @if (isset($usuario->sucursal->id))
+                                <br>
+                                <strong>Suc: {{ $usuario->sucursal->nombre }}</strong>
+                            @endif
+                            @if (isset($usuario->categoria->id))
+                                <br>
+                                <strong>Cat: {{ $usuario->categoria->nombre }}</strong>
+                            @endif
+                        </td>
                         <td>{{ $usuario->email }}</td>
                         <td>
                             {{ $usuario->telefono }}
