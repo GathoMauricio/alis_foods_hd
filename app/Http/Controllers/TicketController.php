@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Ticket;
 use App\Models\Categoria;
 use App\Models\User;
+use App\Models\TicketEstatus;
 use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
@@ -39,7 +40,8 @@ class TicketController extends Controller
     {
         $ticket = Ticket::findOrFail($id);
         $tecnicos = User::where('categoria_id', $ticket->sintoma->servicio->subcategoria->categoria->id)->orderBy('name')->get();
-        return view('tickets.show', compact('ticket', 'tecnicos'));
+        $estatuses = TicketEstatus::get();
+        return view('tickets.show', compact('ticket', 'tecnicos', 'estatuses'));
     }
 
     public function create()
@@ -103,6 +105,23 @@ class TicketController extends Controller
         $ticket = Ticket::findOrFail($request->ticket_id);
         if ($ticket->update($request->all())) {
             return redirect()->route('show_tickets', $request->ticket_id)->with('message', 'El ticket ha sido asignado a ' . $ticket->tecnico->name . ' ' . $ticket->tecnico->apaterno . ' ' . $ticket->tecnico->amaterno . '.');
+        }
+    }
+
+    public function actualizarEstatus(Request $request)
+    {
+        $ticket = Ticket::findOrFail($request->ticket_id);
+        $ticket->estatus_id = $request->estatus_id;
+        switch ($request->estatus_id) {
+            case 3:
+                $ticket->proceso_at = date('Y-m-d H:i:s');
+                break;
+            case 4:
+                $ticket->cerrado_at = date('Y-m-d H:i:s');
+                break;
+        }
+        if ($ticket->save()) {
+            return redirect()->route('show_tickets', $request->ticket_id)->with('message', 'El ticket ha cambiado de estatus.');
         }
     }
 }

@@ -12,6 +12,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('store_tickets', [App\Http\Controllers\TicketController::class, 'store'])->name('store_tickets');
     Route::get('show_tickets/{id}', [App\Http\Controllers\TicketController::class, 'show'])->name('show_tickets');
     Route::put('tomar_ticket', [App\Http\Controllers\TicketController::class, 'tomarTicket'])->name('tomar_ticket');
+    Route::put('actualizar_estatus', [App\Http\Controllers\TicketController::class, 'actualizarEstatus'])->name('actualizar_estatus');
 
     //Roles y permisos
     Route::get('roles_permisos', [App\Http\Controllers\RolesPermisosController::class, 'index'])->name('roles_permisos')->middleware('permission:modulo_roles_permisos');

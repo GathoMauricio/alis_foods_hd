@@ -12,6 +12,9 @@
                 </div>
                 <div class="col-md-6">
                     {{ $ticket->estatus->nombre }}
+                    @if (Auth::user()->hasRole('Administrador'))
+                        <a href="javascript:void(0)" onclick="actualizarEstatus()">Actualizar estatus</a>
+                    @endif
                 </div>
             </div>
             <br>
@@ -170,6 +173,7 @@
     @include('seguimientos.create')
     @include('adjuntos.create')
     @include('tickets.asignar_ticket')
+    @include('tickets.actualizar_estatus')
 @endsection
 @section('custom_scripts')
     <script>
@@ -190,6 +194,11 @@
         @if (Auth::user()->hasRole('Administrador'))
             function asignarTicket() {
                 $("#asignar_ticket_modal").modal('show');
+            }
+        @endif
+        @if (Auth::user()->hasRole('Administrador'))
+            function actualizarEstatus() {
+                $("#actualizar_estatus_modal").modal('show');
             }
         @endif
     </script>
