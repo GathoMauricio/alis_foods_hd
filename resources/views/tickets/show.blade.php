@@ -77,7 +77,7 @@
     <div class="container p-3" style="background-color: white;border: solid 5px #f4f6f9;">
         <h3>
             <div style="float: right;">
-                <a href="javascript:void(0)" onclick="create();" class="btn btn-primary" title="Nuevo"><i
+                <a href="javascript:void(0)" onclick="createSeguimiento();" class="btn btn-primary" title="Nuevo"><i
                         class="icon icon-plus"></i></a>
             </div>
             Seguimientos
@@ -115,47 +115,56 @@
     </div>
     <div class="container p-3" style="background-color: white;border: solid 5px #f4f6f9;">
         <h3>
+            <div style="float: right;">
+                <a href="javascript:void(0)" onclick="createAdjunto();" class="btn btn-primary" title="Nuevo"><i
+                        class="icon icon-plus"></i></a>
+            </div>
             Adjuntos
         </h3>
         <div class="container">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Img</th>
-                        <th>Fecha</th>
-                        <th>Autor</th>
-                        <th>Descripción</th>
-                        <th>&nbsp;</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($ticket->adjuntos as $adjunto)
-                        <tr>
-                            <td>{{ $adjunto->ruta }}</td>
-                            <td>{{ $adjunto->created_at }}</td>
-                            <td>
-                                {{ $adjunto->autor->name }}
-                                {{ $adjunto->autor->apaterno }}
-                                {{ $adjunto->autor->amaterno }}
-                            </td>
-                            <td>{{ $adjunto->descripcion }}</td>
-                            <td></td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td class="text-center" colspan="4">Sin registros</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
+            <div class="row">
+                @forelse ($ticket->adjuntos as $adjunto)
+                    <div class="col-md-3 text-center">
+                        <div class="card">
+                            {{--  @can('eliminar_medio_residencias')
+                                <div class="card-header">
+                                    <div style="float: right;">
+                                        <a href="javascript:void(0);" onclick="deleteMedio({{ $medio->id }});"
+                                            class="btn btn-danger" title="Eliminar"><i class="icon icon-bin"></i></a>
+                                        <form action="{{ route('delete_media_residencias', $medio->id) }}"
+                                            id="form_delete_medio_{{ $medio->id }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                        </form>
+                                    </div>
+                                </div>
+                            @endcan  --}}
+                            <div class="card-body">
+                                <img src="{{ asset('storage/adjuntos/' . $adjunto->ruta) }}" alt="{{ $adjunto->ruta }}"
+                                    style="width:100%;height:200px;">
+                            </div>
+                            <div class="card-footer">
+                                {{ $adjunto->descripcion }}
+                            </div>
+                        </div>
+                    </div>
+                @empty
+                    <center>No se encontraron medios</center>
+                @endforelse
+            </div>
         </div>
     </div>
     @include('seguimientos.create')
+    @include('adjuntos.create')
 @endsection
 @section('custom_scripts')
     <script>
-        function create() {
+        function createSeguimiento() {
             $("#create_seguimientos_modal").modal('show');
+        }
+
+        function createAdjunto() {
+            $("#create_adjuntos_modal").modal('show');
         }
     </script>
 @endsection

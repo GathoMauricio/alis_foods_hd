@@ -37,6 +37,9 @@ Route::group(['middleware' => ['auth']], function () {
     //Seguimientos
     Route::post('store_seguimientos', [App\Http\Controllers\SeguimientoController::class, 'store'])->name('store_seguimientos');
 
+    //Adjuntos
+    Route::post('store_adjuntos', [App\Http\Controllers\AdjuntoController::class, 'store'])->name('store_adjuntos');
+
     #AxiosData
     Route::get('cargar_subcategorias', [App\Http\Controllers\AxiosController::class, 'cargarSubcategorias'])->name('cargar_subcategorias');
     Route::get('cargar_servicios', [App\Http\Controllers\AxiosController::class, 'cargarServicios'])->name('cargar_servicios');

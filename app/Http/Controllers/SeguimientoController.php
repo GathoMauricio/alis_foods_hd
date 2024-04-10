@@ -22,7 +22,7 @@ class SeguimientoController extends Controller
         ]);
 
         if ($seguimiento) {
-            return redirect()->route('show_tickets', $request->ticket_id)->with('message', 'El seguimientop se creó con éxito.');
+            return redirect()->route('show_tickets', $request->ticket_id)->with('message', 'El seguimiento se creó con éxito.');
         }
     }
 }
