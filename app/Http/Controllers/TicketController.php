@@ -33,6 +33,12 @@ class TicketController extends Controller
         return view('tickets.index', compact('tickets'));
     }
 
+    public function show($id)
+    {
+        $ticket = Ticket::findOrFail($id);
+        return view('tickets.show', compact('ticket'));
+    }
+
     public function create()
     {
         $categorias = Categoria::orderBy('nombre')->get();

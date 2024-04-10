@@ -20,7 +20,7 @@ class CreateTicketsTable extends Migration
             $table->bigInteger('autor_id');
             $table->bigInteger('tecnico_id')->nullable();
             $table->string('folio');
-            $table->string('descripcion');
+            $table->text('descripcion');
             $table->boolean('sla')->nullable();
             $table->timestamp('proceso_at')->nullable();
             $table->timestamp('cerrado_at')->nullable();

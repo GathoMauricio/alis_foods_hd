@@ -65,4 +65,14 @@ class Ticket extends Model
         )
             ->withDefault();
     }
+
+    public function seguimientos()
+    {
+        return $this->hasMany('App\Models\Seguimiento', 'ticket_id');
+    }
+
+    public function adjuntos()
+    {
+        return $this->hasMany('App\Models\Adjunto', 'ticket_id');
+    }
 }

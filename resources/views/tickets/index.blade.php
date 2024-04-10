@@ -46,7 +46,7 @@
                         <td style="font-size:12px;">{{ $ticket->descripcion }}</td>
                         <td style="font-size:12px;">{{ $ticket->created_at }}</td>
                         <td>
-                            <a href="#">Detalles</a>
+                            <a href="{{ route('show_tickets', $ticket->id) }}">Detalles</a>
                         </td>
                     </tr>
                 @endforeach
