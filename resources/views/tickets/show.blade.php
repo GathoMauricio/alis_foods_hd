@@ -24,6 +24,16 @@
                         {{ $ticket->tecnico->name }} {{ $ticket->tecnico->apaterno }} {{ $ticket->tecnico->amaterno }}
                     @else
                         No disponible
+                        @if (Auth::user()->hasRole('Técnico'))
+                            <a href="javascript:void(0)" onclick="tomarTicket()">Tomar ticket</a>
+                            <form action="{{ route('tomar_ticket') }}" id="form_tomar_ticket" method="POST"
+                                style="display: none;">
+                                @csrf
+                                @method('PUT')
+                                <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
+                                <input type="hidden" name="tecnico_id" value="{{ Auth::user()->id }}">
+                            </form>
+                        @endif
                     @endif
                 </div>
             </div>
@@ -166,5 +176,12 @@
         function createAdjunto() {
             $("#create_adjuntos_modal").modal('show');
         }
+        @if (Auth::user()->hasRole('Técnico'))
+            function tomarTicket(id) {
+                alertify.confirm('Aviso', '¿Tomar este ticket?', function() {
+                    $("#form_tomar_ticket").submit();
+                }, function() {});
+            }
+        @endif
     </script>
 @endsection

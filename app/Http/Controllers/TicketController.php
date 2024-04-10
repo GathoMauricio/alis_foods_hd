@@ -13,22 +13,23 @@ class TicketController extends Controller
     {
         $tickets = Ticket::where('estatus_id', '<', 4);
 
-        if (Auth::user()->hasRole('Gerente')) {
-            $tickets = $tickets->where('autor_id', Auth::user()->id);
-        }
+        // if (Auth::user()->hasRole('Gerente')) {
+        //     $tickets = $tickets->where('autor_id', Auth::user()->id);
+        // }
 
-        if (Auth::user()->hasRole('Técnico')) {
-            $tickets = $tickets
-                ->leftjoin('sintomas', 'tickets.sintoma_id', 'sintomas.id')
-                ->leftjoin('servicios', 'sintomas.servicio_id', 'servicios.id')
-                ->leftjoin('subcategorias', 'servicios.subcategoria_id', 'subcategorias.id')
-                ->leftjoin('categorias', 'subcategorias.categoria_id', 'categorias.id')
-                ->where('categorias.id', Auth::user()->categoria_id);
-        }
+        // if (Auth::user()->hasRole('Técnico')) {
+        //     $tickets = $tickets
+        //         ->leftjoin('sintomas', 'tickets.sintoma_id', 'sintomas.id')
+        //         ->leftjoin('servicios', 'sintomas.servicio_id', 'servicios.id')
+        //         ->leftjoin('subcategorias', 'servicios.subcategoria_id', 'subcategorias.id')
+        //         ->leftjoin('categorias', 'subcategorias.categoria_id', 'categorias.id')
+        //         ->where('categorias.id', Auth::user()->categoria_id);
+        // }
 
-        if (Auth::user()->hasRole('Administrador') && Auth::user()->hasRole('Técnico')) {
-            $tickets = Ticket::where('estatus_id', '<', 4);
-        }
+        // if (Auth::user()->hasRole('Administrador') && Auth::user()->hasRole('Técnico')) {
+        //     $tickets = Ticket::where('estatus_id', '<', 4);
+        // }
+
         $tickets = $tickets->orderBy('tickets.created_at', 'DESC')->paginate(15);
         return view('tickets.index', compact('tickets'));
     }
@@ -93,5 +94,13 @@ class TicketController extends Controller
             return 'TK-' . ($ultimo->id + 1);
         else
             return 'TK-1';
+    }
+
+    public function tomarTicket(Request $request)
+    {
+        $ticket = Ticket::findOrFail($request->ticket_id);
+        if ($ticket->update($request->all())) {
+            return redirect()->route('show_tickets', $request->ticket_id)->with('message', 'El ticket ha sido asignado a ' . $ticket->tecnico->name . ' ' . $ticket->tecnico->amaterno . ' .');
+        }
     }
 }
