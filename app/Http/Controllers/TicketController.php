@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Ticket;
 use App\Models\Categoria;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
@@ -37,7 +38,8 @@ class TicketController extends Controller
     public function show($id)
     {
         $ticket = Ticket::findOrFail($id);
-        return view('tickets.show', compact('ticket'));
+        $tecnicos = User::where('categoria_id', $ticket->sintoma->servicio->subcategoria->categoria->id)->orderBy('name')->get();
+        return view('tickets.show', compact('ticket', 'tecnicos'));
     }
 
     public function create()
@@ -100,7 +102,7 @@ class TicketController extends Controller
     {
         $ticket = Ticket::findOrFail($request->ticket_id);
         if ($ticket->update($request->all())) {
-            return redirect()->route('show_tickets', $request->ticket_id)->with('message', 'El ticket ha sido asignado a ' . $ticket->tecnico->name . ' ' . $ticket->tecnico->amaterno . ' .');
+            return redirect()->route('show_tickets', $request->ticket_id)->with('message', 'El ticket ha sido asignado a ' . $ticket->tecnico->name . ' ' . $ticket->tecnico->apaterno . ' ' . $ticket->tecnico->amaterno . '.');
         }
     }
 }

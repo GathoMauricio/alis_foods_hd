@@ -35,6 +35,9 @@
                             </form>
                         @endif
                     @endif
+                    @if (Auth::user()->hasRole('Administrador'))
+                        <a href="javascript:void(0)" onclick="asignarTicket()">Asignar ticket</a>
+                    @endif
                 </div>
             </div>
             <br>
@@ -166,6 +169,7 @@
     </div>
     @include('seguimientos.create')
     @include('adjuntos.create')
+    @include('tickets.asignar_ticket')
 @endsection
 @section('custom_scripts')
     <script>
@@ -181,6 +185,11 @@
                 alertify.confirm('Aviso', '¿Tomar este ticket?', function() {
                     $("#form_tomar_ticket").submit();
                 }, function() {});
+            }
+        @endif
+        @if (Auth::user()->hasRole('Administrador'))
+            function asignarTicket() {
+                $("#asignar_ticket_modal").modal('show');
             }
         @endif
     </script>
