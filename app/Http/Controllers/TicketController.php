@@ -14,26 +14,27 @@ class TicketController extends Controller
 
     public function index()
     {
-        $tickets = Ticket::where('estatus_id', '<', 4);
+        if (Auth::user()->hasRole('Gerente')) {
+            $tickets = Ticket::where('estatus_id', '<', 4)->where('autor_id', Auth::user()->id)->orderBy('id', 'DESC')->paginate(15);
+        }
 
-        // if (Auth::user()->hasRole('Gerente')) {
-        //     $tickets = $tickets->where('autor_id', Auth::user()->id);
-        // }
+        if (Auth::user()->hasRole('Técnico')) {
+            $tickets = Ticket::where('estatus_id', '<', 4)
+                ->leftjoin('sintomas', 'tickets.sintoma_id', 'sintomas.id')
+                ->leftjoin('servicios', 'sintomas.servicio_id', 'servicios.id')
+                ->leftjoin('subcategorias', 'servicios.subcategoria_id', 'subcategorias.id')
+                ->leftjoin('categorias', 'subcategorias.categoria_id', 'categorias.id')
+                ->where('categorias.id', Auth::user()->categoria_id)->orderBy('tickets.id', 'DESC')->paginate(15);;
+        }
 
-        // if (Auth::user()->hasRole('Técnico')) {
-        //     $tickets = $tickets
-        //         ->leftjoin('sintomas', 'tickets.sintoma_id', 'sintomas.id')
-        //         ->leftjoin('servicios', 'sintomas.servicio_id', 'servicios.id')
-        //         ->leftjoin('subcategorias', 'servicios.subcategoria_id', 'subcategorias.id')
-        //         ->leftjoin('categorias', 'subcategorias.categoria_id', 'categorias.id')
-        //         ->where('categorias.id', Auth::user()->categoria_id);
-        // }
+        if (Auth::user()->hasRole('Administrador')) {
+            $tickets = Ticket::where('estatus_id', '<', 4)->orderBy('id', 'DESC')->paginate(15);
+        }
 
-        // if (Auth::user()->hasRole('Administrador') && Auth::user()->hasRole('Técnico')) {
-        //     $tickets = Ticket::where('estatus_id', '<', 4);
-        // }
+        if (Auth::user()->hasRole('Super usuario')) {
+            $tickets = Ticket::orderBy('id', 'DESC')->paginate(15);
+        }
 
-        $tickets = $tickets->orderBy('tickets.created_at', 'DESC')->paginate(15);
         return view('tickets.index', compact('tickets'));
     }
 
