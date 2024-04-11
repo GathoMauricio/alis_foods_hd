@@ -137,6 +137,20 @@ class TicketController extends Controller
                 break;
         }
         if ($ticket->save()) {
+            $emails = [];
+            foreach (User::get() as $user) {
+                if ($user->hasRole('Administrador') || $ticket->autor_id == $user->id || $ticket->tecnico_id == $user->id) {
+                    $emails[] = $user->email;
+                }
+            }
+            $not = new NotificacionController();
+            $data = [
+                'tipo_notificacion' => 'cambio_estatus',
+                'ticket' => $ticket,
+            ];
+
+            $not->enviarEmail("Cambio de estaus", "notificacion", $data, $emails);
+            //\Log::debug($emails);
             return redirect()->route('show_tickets', $request->ticket_id)->with('message', 'El ticket ha cambiado de estatus.');
         }
     }

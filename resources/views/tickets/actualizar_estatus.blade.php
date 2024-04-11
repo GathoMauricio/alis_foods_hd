@@ -16,7 +16,8 @@
                         <select name="estatus_id" class="form-select" required>
                             <option value>---Seleccione--</option>
                             @foreach ($estatuses as $estatus)
-                                <option value="{{ $estatus->id }}">{{ $estatus->nombre }}</option>
+                                <option value="{{ $estatus->id }}" @if ($ticket->estatus_id == $estatus->id) selected @endif>
+                                    {{ $estatus->nombre }}</option>
                             @endforeach
                         </select>
                     </div>

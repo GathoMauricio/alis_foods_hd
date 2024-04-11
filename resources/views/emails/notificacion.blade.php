@@ -39,7 +39,7 @@
                 Se ha agregado un nuevo archivo a un ticket
             @endif
             @if ($tipo_notificacion == 'cambio_estatus')
-                Se ha cambiado el estatus de un ticket
+                Se ha cambiado el estatus de un ticket a <strong>{{ $ticket->estatus->nombre }}</strong>
             @endif
 
             a travéz del portal
