@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
 {
+
     public function index()
     {
         $tickets = Ticket::where('estatus_id', '<', 4);
@@ -79,6 +80,21 @@ class TicketController extends Controller
         ]);
 
         if ($ticket) {
+
+            $emails = [];
+            foreach (User::get() as $user) {
+                if ($user->hasRole('Administrador') || $user->categoria_id == $ticket->sintoma->servicio->subcategoria->categoria->id) {
+                    $emails[] = $user->email;
+                }
+            }
+            $not = new NotificacionController();
+            $data = [
+                'tipo_notificacion' => 'nuevo_ticket',
+                'ticket' => $ticket,
+            ];
+
+            $not->enviarEmail("Nuevo ticket", "notificacion", $data, $emails);
+
             return response()->json([
                 'error' => 0,
                 'mensaje' => 'Registro creado',
