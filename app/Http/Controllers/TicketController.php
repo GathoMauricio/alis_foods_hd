@@ -94,7 +94,7 @@ class TicketController extends Controller
             ];
 
             $not->enviarEmail("Nuevo ticket", "notificacion", $data, $emails);
-
+            \Log::debug($emails);
             return response()->json([
                 'error' => 0,
                 'mensaje' => 'Registro creado',
