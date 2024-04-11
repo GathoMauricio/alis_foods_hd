@@ -8,17 +8,12 @@
     <title>Notificación Alisfoods HelpDesk</title>
     <style>
         .enlace {
-            color: #ffffff;
-            background-color: #2d63c8;
+            color: #2d63c8;
+            background-color: #ffffff;
             font-size: 19px;
             border: 1px solid #2d63c8;
             padding: 15px 50px;
             cursor: pointer
-        }
-
-        .enlace:hover {
-            color: #2d63c8;
-            background-color: #ffffff;
         }
     </style>
 </head>
@@ -48,8 +43,9 @@
             @endif
 
             a travéz del portal
-            <a href="http://dotech.dyndns.biz:16666/alis_foods_hd" target="_BLANK">AlisFoods</a>
-            con el folio <strong>{{ $ticket->folio }}</strong> por el contacto
+            <a href="http://dotech.dyndns.biz:16666/alis_foods_hd" target="_BLANK">AlisFoods</a> por la sucursal
+            <strong>{{ $ticket->autor->sucursal->nombre }}</strong>
+            con el folio <strong>{{ $ticket->folio }}</strong> por el usuario
             <strong>{{ $ticket->autor->name }} {{ $ticket->autor->apaterno }} {{ $ticket->autor->amaterno }}</strong> en
             la categoria de
             <strong>{{ $ticket->sintoma->servicio->subcategoria->categoria->nombre }}</strong> subcategoría
