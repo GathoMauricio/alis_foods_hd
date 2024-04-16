@@ -13,10 +13,10 @@
                 <input type="hidden" name="estatus_id" value="5">
                 <div class="modal-body">
                     <div class="form-group" id="div_detalle_proceso_terceros">
-                        <label for="texto"><strong>Puede ingresar algun comentario antes de finalizar el
+                        <label for="texto"><strong>Ingrese algún comentario antes de finalizar el
                                 ticket</strong> </label>
                         <br>
-                        <textarea name="detalle_finalizado" class="form-control"></textarea>
+                        <textarea name="detalle_finalizado" class="form-control" required></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">

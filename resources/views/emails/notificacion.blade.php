@@ -39,14 +39,49 @@
                 Se ha agregado un nuevo archivo a un ticket
             @endif
             @if ($tipo_notificacion == 'cambio_estatus')
-                Se ha cambiado el estatus de un ticket a <strong>{{ $ticket->estatus->nombre }}</strong>
+                @if ($ticket->estatus_id == 2)
+                    El técnico <strong>{{ $ticket->tecnico->name }} {{ $ticket->tecnico->apaterno }}
+                        {{ $ticket->tecnico->amaterno }}</strong> ha cambiado el estatus del ticket a <strong>proceso
+                        con
+                        terceros</strong> con la siguiente descripción:
+                    <br><br>
+                    <strong>"{{ $ticket->detalle_proceso_terceros }}."</strong>
+                    <br><br>
+                @endif
+                @if ($ticket->estatus_id == 3)
+                    El técnico <strong>{{ $ticket->tecnico->name }} {{ $ticket->tecnico->apaterno }}
+                        {{ $ticket->tecnico->amaterno }}</strong> ha iniciado el proceso del ticket a las:
+                    <strong>{{ $ticket->proceso_at }}</strong>
+                    <br><br>
+                @endif
+                @if ($ticket->estatus_id == 4)
+                    El técnico <strong>{{ $ticket->tecnico->name }} {{ $ticket->tecnico->apaterno }}
+                        {{ $ticket->tecnico->amaterno }}</strong> ha cerrado el proceso a las:
+                    <strong>{{ $ticket->cerrado_at }}</strong>
+                    y quedará en espera de confirmación por parte del gerente <strong>{{ $ticket->autor->name }}
+                        {{ $ticket->autor->apaterno }} {{ $ticket->autor->amaterno }}</strong> para ser finalizado.
+                    <br>
+                    En caso de hacer caso omiso después de 24 horas el ticket se finalizará automaticamente
+                    <br><br>
+                @endif
+                @if ($ticket->estatus_id == 5)
+                    El gerente <strong>{{ $ticket->autor->name }} {{ $ticket->autor->apaterno }}
+                        {{ $ticket->autor->amaterno }}</strong> ha cambiado el estatus del ticket a finalizado con la
+                    siguiente descripción:
+                    <br>
+                    <strong>{{ $ticket->detalle_finalizado }}</strong>
+                    <br><br>
+                    La infornación de este ticket ha pasado a la sección de "Histórico" para fines informativos.
+                    <br><br>
+                @endif
             @endif
 
             a travéz del portal
             <a href="http://dotech.dyndns.biz:16666/alis_foods_hd" target="_BLANK">AlisFoods</a> por la sucursal
             <strong>{{ $ticket->autor->sucursal->nombre }}</strong>
             con el folio <strong>{{ $ticket->folio }}</strong> por el usuario
-            <strong>{{ $ticket->autor->name }} {{ $ticket->autor->apaterno }} {{ $ticket->autor->amaterno }}</strong> en
+            <strong>{{ $ticket->autor->name }} {{ $ticket->autor->apaterno }} {{ $ticket->autor->amaterno }}</strong>
+            en
             la categoria de
             <strong>{{ $ticket->sintoma->servicio->subcategoria->categoria->nombre }}</strong> subcategoría
             <strong><strong>{{ $ticket->sintoma->servicio->subcategoria->nombre }}</strong></strong>

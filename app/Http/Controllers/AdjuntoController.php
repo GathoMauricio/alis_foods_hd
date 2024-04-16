@@ -39,7 +39,7 @@ class AdjuntoController extends Controller
                 'ticket' => $adjunto->ticket,
             ];
 
-            $not->enviarEmail("Nuevo adjunto", "notificacion", $data, $emails);
+            $not->enviarEmail("Nuevo adjunto " . $adjunto->ticket->folio, "notificacion", $data, $emails);
             //\Log::debug($emails);
             return redirect()->route('show_tickets', $request->ticket_id)->with('message', 'El adjunto se creó con éxito.');
         }

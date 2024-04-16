@@ -51,6 +51,10 @@
                         {{ $ticket->estatus->nombre }}
                     </span>
                     <br>
+                    @if ($ticket->estatus_id == 1)
+                        <br>
+                        "{{ $ticket->created_at }}"
+                    @endif
                     @if ($ticket->estatus_id == 2)
                         <br>
                         "{{ $ticket->detalle_proceso_terceros }}"

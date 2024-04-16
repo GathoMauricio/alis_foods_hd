@@ -94,7 +94,7 @@ class TicketController extends Controller
                 'ticket' => $ticket,
             ];
 
-            $not->enviarEmail("Nuevo ticket", "notificacion", $data, $emails);
+            $not->enviarEmail("Nuevo ticket " . $ticket->folio, "notificacion", $data, $emails);
 
             return response()->json([
                 'error' => 0,
@@ -134,11 +134,33 @@ class TicketController extends Controller
                 $ticket->save();
             }
             if ($request->estatus_id == 5) {
+                $ticket->tipo_finalizado = "Por el gerente";
                 $ticket->finalizado_at = date('Y-m-d H:i:s');
                 $ticket->save();
             }
 
-            //Enviar email al gerente(author) y admins
+            $emails = [];
+            if ($request->estatus_id < 5) {
+                foreach (User::get() as $user) {
+                    if ($user->hasRole('Administrador') || $user->id == $ticket->autor_id) {
+                        $emails[] = $user->email;
+                    }
+                }
+            } else {
+                foreach (User::get() as $user) {
+                    if ($user->hasRole('Administrador') || $user->id == $ticket->tecnico_id) {
+                        $emails[] = $user->email;
+                    }
+                }
+            }
+
+            $not = new NotificacionController();
+            $data = [
+                'tipo_notificacion' => 'cambio_estatus',
+                'ticket' => $ticket,
+            ];
+            $not->enviarEmail("Cambio de estatus " . $ticket->folio, "notificacion", $data, $emails);
+
             return redirect()->route('show_tickets', $request->ticket_id)->with('message', 'El ticket ha sido actualizado');
         }
     }

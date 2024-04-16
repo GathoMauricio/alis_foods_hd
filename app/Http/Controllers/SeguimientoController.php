@@ -35,7 +35,7 @@ class SeguimientoController extends Controller
                 'ticket' => $seguimiento->ticket,
             ];
 
-            $not->enviarEmail("Nuevo seguimiento", "notificacion", $data, $emails);
+            $not->enviarEmail("Nuevo seguimiento " . $seguimiento->ticket->folio, "notificacion", $data, $emails);
             //\Log::debug($emails);
             return redirect()->route('show_tickets', $request->ticket_id)->with('message', 'El seguimiento se creó con éxito.');
         }

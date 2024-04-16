@@ -24,6 +24,7 @@ class Ticket extends Model
         'detalle_proceso_terceros',
         'detalle_finalizado',
         'sla',
+        'tipo_finalizado',
         'proceso_at',
         'cerrado_at',
         'finalizado_at',

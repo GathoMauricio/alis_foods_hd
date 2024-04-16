@@ -22,6 +22,7 @@ class CreateTicketsTable extends Migration
             $table->string('folio');
             $table->text('descripcion');
             $table->boolean('sla')->nullable();
+            $table->text('tipo_finalizado')->nullable();
             $table->timestamp('proceso_at')->nullable();
             $table->timestamp('cerrado_at')->nullable();
             $table->softDeletes();
