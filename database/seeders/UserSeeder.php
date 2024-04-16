@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
                 'password' => bcrypt('12345678'),
             ]
         );
-        $mauricio->assignRole(['Super usuario']);
+        $mauricio->assignRole(['Super usuario', 'Administrador', 'Gerente', 'Técnico']);
 
         $rene = User::create(
             [
@@ -41,7 +41,7 @@ class UserSeeder extends Seeder
                 'password' => bcrypt('12345678'),
             ]
         );
-        $rene->assignRole(['Super usuario']);
+        $rene->assignRole(['Super usuario', 'Administrador', 'Gerente', 'Técnico']);
 
         #Usuarios finales
         $user = User::create(

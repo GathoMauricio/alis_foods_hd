@@ -38,6 +38,27 @@ class TicketController extends Controller
         return view('tickets.index', compact('tickets'));
     }
 
+    public function historico()
+    {
+        if (Auth::user()->hasRole('Gerente')) {
+            $tickets = Ticket::where('estatus_id', '>=', 5)->where('autor_id', Auth::user()->id)->orderBy('id', 'DESC')->paginate(15);
+        }
+
+        if (Auth::user()->hasRole('Técnico')) {
+            $tickets = Ticket::where('estatus_id', '>=', 5)->where('tecnico_id', Auth::user()->id)->orderBy('id', 'DESC')->paginate(15);
+        }
+
+        if (Auth::user()->hasRole('Administrador')) {
+            $tickets = Ticket::where('estatus_id', '>=', 5)->orderBy('id', 'DESC')->paginate(15);
+        }
+
+        if (Auth::user()->hasRole('Super usuario')) {
+            $tickets = Ticket::where('estatus_id', '>=', 5)->orderBy('id', 'DESC')->paginate(15);
+        }
+
+        return view('tickets.historico', compact('tickets'));
+    }
+
     public function show($id)
     {
         $ticket = Ticket::findOrFail($id);

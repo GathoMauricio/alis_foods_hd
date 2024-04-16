@@ -86,6 +86,9 @@
                                     <a class="dropdown-item" href="{{ route('/') }}">
                                         Inicio
                                     </a>
+                                    <a class="dropdown-item" href="{{ route('historico') }}">
+                                        Histórico
+                                    </a>
                                     @can('modulo_roles_permisos')
                                         <a class="dropdown-item" href="{{ route('roles_permisos') }}">
                                             Roles y permisos
@@ -125,6 +128,28 @@
         <main class="py-4">
             @yield('content')
         </main>
+        @auth
+            <div id="box_roles">
+                <ul>
+                    @foreach (Auth::user()->roles as $rol)
+                        <li>{{ $rol->name }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            <style>
+                #box_roles {
+                    position: fixed;
+                    left: 0;
+                    bottom: 0;
+                    background-color: black;
+                    color: white;
+                    padding-top: 5px;
+                    padding-right: 5px;
+                    font-weight: bold;
+                    opacity: 40%;
+                }
+            </style>
+        @endauth
     </div>
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="

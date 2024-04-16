@@ -67,6 +67,10 @@
                         <br>
                         "{{ $ticket->cerrado_at }}"
                     @endif
+                    @if ($ticket->estatus_id == 5)
+                        <br>
+                        "{{ $ticket->finalizado_at }}"
+                    @endif
                 </div>
             </div>
             <br>
@@ -140,10 +144,12 @@
     </div>
     <div class="container p-3" style="background-color: white;border: solid 5px #f4f6f9;">
         <h3>
-            <div style="float: right;">
-                <a href="javascript:void(0)" onclick="createSeguimiento();" class="btn btn-primary" title="Nuevo"><i
-                        class="icon icon-plus"></i></a>
-            </div>
+            @if ($ticket->estatus_id < 5)
+                <div style="float: right;">
+                    <a href="javascript:void(0)" onclick="createSeguimiento();" class="btn btn-primary" title="Nuevo"><i
+                            class="icon icon-plus"></i></a>
+                </div>
+            @endif
             Seguimientos
         </h3>
         <div class="container">
@@ -177,12 +183,88 @@
             </table>
         </div>
     </div>
+    @if ($ticket->estatus_id >= 5)
+        <div class="container p-3" style="background-color: white;border: solid 5px #f4f6f9;">
+            <h3>Histórico</h3>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        Creado:
+                    </div>
+                    <div class="col-md-6">
+                        {{ $ticket->created_at }}
+                    </div>
+                </div>
+                <br>
+                @if ($ticket->detalle_proceso_terceros)
+                    <div class="row">
+                        <div class="col-md-6">
+                            Proceso con terceros:
+                        </div>
+                        <div class="col-md-6">
+                            {{ $ticket->detalle_proceso_terceros }}
+                        </div>
+                    </div>
+                    <br>
+                @endif
+                <div class="row">
+                    <div class="col-md-6">
+                        Inicio del proceso:
+                    </div>
+                    <div class="col-md-6">
+                        {{ $ticket->proceso_at }}
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-6">
+                        Cerrado por el técnico
+                    </div>
+                    <div class="col-md-6">
+                        {{ $ticket->cerrado_at }}
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-6">
+                        Tipo de finalización:
+                    </div>
+                    <div class="col-md-6">
+                        {{ $ticket->tipo_finalizado }}
+                    </div>
+                </div>
+                <br>
+                @if ($ticket->detalle_finalizado)
+                    <div class="row">
+                        <div class="col-md-6">
+                            Tipo de finalización:
+                        </div>
+                        <div class="col-md-6">
+                            {{ $ticket->detalle_finalizado }}
+                        </div>
+                    </div>
+                    <br>
+                @endif
+                <div class="row">
+                    <div class="col-md-6">
+                        Finalizado:
+                    </div>
+                    <div class="col-md-6">
+                        {{ $ticket->finalizado_at }}
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+    @endif
     <div class="container p-3" style="background-color: white;border: solid 5px #f4f6f9;">
         <h3>
-            <div style="float: right;">
-                <a href="javascript:void(0)" onclick="createAdjunto();" class="btn btn-primary" title="Nuevo"><i
-                        class="icon icon-plus"></i></a>
-            </div>
+            @if ($ticket->estatus_id < 5)
+                <div style="float: right;">
+                    <a href="javascript:void(0)" onclick="createAdjunto();" class="btn btn-primary" title="Nuevo"><i
+                            class="icon icon-plus"></i></a>
+                </div>
+            @endif
             Adjuntos
         </h3>
         <div class="container">
