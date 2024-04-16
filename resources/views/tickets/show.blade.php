@@ -3,7 +3,43 @@
 @section('content')
     <div class="container p-3" style="background-color: white;border: solid 5px #f4f6f9;">
         <h3>
-            Detalle ticket
+            <div style="float:right">
+                @if (Auth::user()->hasRole('Técnico') && $ticket->estatus_id == 1)
+                    <a href="javascript:void(0)" onclick="tomarTicket()" class="btn btn-primary">
+                        Tomar ticket
+                    </a>
+                @endif
+                @if (Auth::user()->hasRole('Técnico') && $ticket->estatus_id == 2)
+                    <a href="javascript:void(0)" onclick="iniciarProceso()" class="btn btn-primary">
+                        Iniciar proceso
+                    </a>
+                    <form action="{{ route('estatus_ticket') }}" id="form_iniciar_proceso" method="POST"
+                        style="display:none">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
+                        <input type="hidden" name="estatus_id" value="3">
+                    </form>
+                @endif
+                @if (Auth::user()->hasRole('Técnico') && $ticket->estatus_id == 3)
+                    <a href="javascript:void(0)" onclick="cerrarProceso()" class="btn btn-primary">
+                        Cerrar proceso
+                    </a>
+                    <form action="{{ route('estatus_ticket') }}" id="form_cerrar_proceso" method="POST"
+                        style="display:none">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
+                        <input type="hidden" name="estatus_id" value="4">
+                    </form>
+                @endif
+                @if (Auth::user()->id == $ticket->autor->id && $ticket->estatus_id == 4)
+                    <a href="javascript:void(0)" onclick="finalizarTicket()" class="btn btn-primary">
+                        Finalizar ticket
+                    </a>
+                @endif
+            </div>
+            Detalle ticket {{ $ticket->folio }}
         </h3>
         <div class="container">
             <div class="row">
@@ -11,10 +47,31 @@
                     Estatus:
                 </div>
                 <div class="col-md-6">
-                    {{ $ticket->estatus->nombre }}
-                    @if (Auth::user()->hasRole('Administrador'))
-                        <a href="javascript:void(0)" onclick="actualizarEstatus()">Actualizar estatus</a>
+                    <span class="bg-info p-2 rounded">
+                        {{ $ticket->estatus->nombre }}
+                    </span>
+                    <br>
+                    @if ($ticket->estatus_id == 2)
+                        <br>
+                        "{{ $ticket->detalle_proceso_terceros }}"
                     @endif
+                    @if ($ticket->estatus_id == 3)
+                        <br>
+                        "{{ $ticket->proceso_at }}"
+                    @endif
+                    @if ($ticket->estatus_id == 4)
+                        <br>
+                        "{{ $ticket->cerrado_at }}"
+                    @endif
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+                    Autor:
+                </div>
+                <div class="col-md-6">
+                    {{ $ticket->autor->name }} {{ $ticket->autor->apaterno }} {{ $ticket->autor->amaterno }}
                 </div>
             </div>
             <br>
@@ -26,20 +83,7 @@
                     @if (isset($ticket->tecnico->id))
                         {{ $ticket->tecnico->name }} {{ $ticket->tecnico->apaterno }} {{ $ticket->tecnico->amaterno }}
                     @else
-                        No disponible
-                        @if (Auth::user()->hasRole('Técnico'))
-                            <a href="javascript:void(0)" onclick="tomarTicket()">Tomar ticket</a>
-                            <form action="{{ route('tomar_ticket') }}" id="form_tomar_ticket" method="POST"
-                                style="display: none;">
-                                @csrf
-                                @method('PUT')
-                                <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
-                                <input type="hidden" name="tecnico_id" value="{{ Auth::user()->id }}">
-                            </form>
-                        @endif
-                    @endif
-                    @if (Auth::user()->hasRole('Administrador'))
-                        <a href="javascript:void(0)" onclick="asignarTicket()">Asignar ticket</a>
+                        NO ASIGNADO
                     @endif
                 </div>
             </div>
@@ -172,8 +216,8 @@
     </div>
     @include('seguimientos.create')
     @include('adjuntos.create')
-    @include('tickets.asignar_ticket')
-    @include('tickets.actualizar_estatus')
+    @include('tickets.tomar_ticket')
+    @include('tickets.finalizar_ticket')
 @endsection
 @section('custom_scripts')
     <script>
@@ -184,21 +228,28 @@
         function createAdjunto() {
             $("#create_adjuntos_modal").modal('show');
         }
-        @if (Auth::user()->hasRole('Técnico'))
+        @if (Auth::user()->hasRole('Técnico') && $ticket->estatus->id == 1)
             function tomarTicket(id) {
-                alertify.confirm('Aviso', '¿Tomar este ticket?', function() {
-                    $("#form_tomar_ticket").submit();
+                $("#tomar_ticket_modal").modal('show');
+            }
+        @endif
+        @if (Auth::user()->hasRole('Técnico') && $ticket->estatus->id == 2)
+            function iniciarProceso() {
+                alertify.confirm('Aviso', '¿Iniciar proceso?', function() {
+                    $("#form_iniciar_proceso").submit();
                 }, function() {});
             }
         @endif
-        @if (Auth::user()->hasRole('Administrador'))
-            function asignarTicket() {
-                $("#asignar_ticket_modal").modal('show');
+        @if (Auth::user()->hasRole('Técnico') && $ticket->estatus->id == 3)
+            function cerrarProceso() {
+                alertify.confirm('Aviso', 'Cerrar proceso?', function() {
+                    $("#form_cerrar_proceso").submit();
+                }, function() {});
             }
         @endif
-        @if (Auth::user()->hasRole('Administrador'))
-            function actualizarEstatus() {
-                $("#actualizar_estatus_modal").modal('show');
+        @if (Auth::user()->id == $ticket->autor->id && $ticket->estatus->id == 4)
+            function finalizarTicket() {
+                $("#finalizar_ticket_modal").modal('show');
             }
         @endif
     </script>

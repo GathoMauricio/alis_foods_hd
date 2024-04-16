@@ -21,9 +21,12 @@ class Ticket extends Model
         'tecnico_id',
         'folio',
         'descripcion',
+        'detalle_proceso_terceros',
+        'detalle_finalizado',
         'sla',
         'proceso_at',
-        'cerrado_at'
+        'cerrado_at',
+        'finalizado_at',
     ];
 
     public function estatus()

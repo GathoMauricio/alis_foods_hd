@@ -15,11 +15,11 @@ class TicketController extends Controller
     public function index()
     {
         if (Auth::user()->hasRole('Gerente')) {
-            $tickets = Ticket::where('estatus_id', '<', 4)->where('autor_id', Auth::user()->id)->orderBy('id', 'DESC')->paginate(15);
+            $tickets = Ticket::where('estatus_id', '<', 5)->where('autor_id', Auth::user()->id)->orderBy('id', 'DESC')->paginate(15);
         }
 
         if (Auth::user()->hasRole('Técnico')) {
-            $tickets = Ticket::where('estatus_id', '<', 4)
+            $tickets = Ticket::where('estatus_id', '<', 5)
                 ->leftjoin('sintomas', 'tickets.sintoma_id', 'sintomas.id')
                 ->leftjoin('servicios', 'sintomas.servicio_id', 'servicios.id')
                 ->leftjoin('subcategorias', 'servicios.subcategoria_id', 'subcategorias.id')
@@ -28,11 +28,11 @@ class TicketController extends Controller
         }
 
         if (Auth::user()->hasRole('Administrador')) {
-            $tickets = Ticket::where('estatus_id', '<', 4)->orderBy('id', 'DESC')->paginate(15);
+            $tickets = Ticket::where('estatus_id', '<', 5)->orderBy('id', 'DESC')->paginate(15);
         }
 
         if (Auth::user()->hasRole('Super usuario')) {
-            $tickets = Ticket::orderBy('id', 'DESC')->paginate(15);
+            $tickets = Ticket::where('estatus_id', '<', 5)->orderBy('id', 'DESC')->paginate(15);
         }
 
         return view('tickets.index', compact('tickets'));
@@ -95,10 +95,11 @@ class TicketController extends Controller
             ];
 
             $not->enviarEmail("Nuevo ticket", "notificacion", $data, $emails);
-            //\Log::debug($emails);
+
             return response()->json([
                 'error' => 0,
                 'mensaje' => 'Registro creado',
+                'ticket_id' => $ticket->id,
             ]);
         } else {
             return response()->json([
@@ -117,42 +118,28 @@ class TicketController extends Controller
             return 'TK-1';
     }
 
-    public function tomarTicket(Request $request)
+
+    public function estatusTicket(Request $request)
     {
         $ticket = Ticket::findOrFail($request->ticket_id);
+        //Si el estatus llega en proceso con terceros, se guarda tambien el detalle pero no se guarda el timestamp
         if ($ticket->update($request->all())) {
-            return redirect()->route('show_tickets', $request->ticket_id)->with('message', 'El ticket ha sido asignado a ' . $ticket->tecnico->name . ' ' . $ticket->tecnico->apaterno . ' ' . $ticket->tecnico->amaterno . '.');
-        }
-    }
-
-    public function actualizarEstatus(Request $request)
-    {
-        $ticket = Ticket::findOrFail($request->ticket_id);
-        $ticket->estatus_id = $request->estatus_id;
-        switch ($request->estatus_id) {
-            case 3:
+            //Si el eststus llega directamente en proceso se guarda el timestamp
+            if ($request->estatus_id == 3) {
                 $ticket->proceso_at = date('Y-m-d H:i:s');
-                break;
-            case 4:
-                $ticket->cerrado_at = date('Y-m-d H:i:s');
-                break;
-        }
-        if ($ticket->save()) {
-            $emails = [];
-            foreach (User::get() as $user) {
-                if ($user->hasRole('Administrador') || $ticket->autor_id == $user->id || $ticket->tecnico_id == $user->id) {
-                    $emails[] = $user->email;
-                }
+                $ticket->save();
             }
-            $not = new NotificacionController();
-            $data = [
-                'tipo_notificacion' => 'cambio_estatus',
-                'ticket' => $ticket,
-            ];
+            if ($request->estatus_id == 4) {
+                $ticket->cerrado_at = date('Y-m-d H:i:s');
+                $ticket->save();
+            }
+            if ($request->estatus_id == 5) {
+                $ticket->finalizado_at = date('Y-m-d H:i:s');
+                $ticket->save();
+            }
 
-            $not->enviarEmail("Cambio de estaus", "notificacion", $data, $emails);
-            //\Log::debug($emails);
-            return redirect()->route('show_tickets', $request->ticket_id)->with('message', 'El ticket ha cambiado de estatus.');
+            //Enviar email al gerente(author) y admins
+            return redirect()->route('show_tickets', $request->ticket_id)->with('message', 'El ticket ha sido actualizado');
         }
     }
 }

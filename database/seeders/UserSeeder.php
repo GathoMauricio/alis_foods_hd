@@ -96,19 +96,19 @@ class UserSeeder extends Seeder
             ]
         );
         $user->assignRole(['Técnico']);
-        $user = User::create(
-            [
-                'sucursal_id' => null,
-                'categoria_id' => 1,
-                'name' => 'Juan Carlos',
-                'apaterno' => 'García',
-                'amaterno' => '',
-                'email' => 'jcgarcia@alisfoods.com',
-                'telefono' => '',
-                'password' => bcrypt('d8aC25'),
-            ]
-        );
-        $user->assignRole(['Técnico']);
+        // $user = User::create(
+        //     [
+        //         'sucursal_id' => null,
+        //         'categoria_id' => 1,
+        //         'name' => 'Juan Carlos',
+        //         'apaterno' => 'García',
+        //         'amaterno' => '',
+        //         'email' => 'jcgarcia@alisfoods.com',
+        //         'telefono' => '',
+        //         'password' => bcrypt('d8aC25'),
+        //     ]
+        // );
+        // $user->assignRole(['Técnico']);
         $user = User::create(
             [
                 'sucursal_id' => null,
