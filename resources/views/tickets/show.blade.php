@@ -9,7 +9,7 @@
                         Tomar ticket
                     </a>
                 @endif
-                @if (Auth::user()->hasRole('Técnico') && $ticket->estatus_id == 2)
+                @if (Auth::user()->hasRole('Técnico') && $ticket->estatus_id == 2 && $ticket->tecnico_id == Auth::user()->id)
                     <a href="javascript:void(0)" onclick="iniciarProceso()" class="btn btn-primary">
                         Iniciar proceso
                     </a>
@@ -21,7 +21,7 @@
                         <input type="hidden" name="estatus_id" value="3">
                     </form>
                 @endif
-                @if (Auth::user()->hasRole('Técnico') && $ticket->estatus_id == 3)
+                @if (Auth::user()->hasRole('Técnico') && $ticket->estatus_id == 3 && $ticket->tecnico_id == Auth::user()->id)
                     <a href="javascript:void(0)" onclick="cerrarProceso()" class="btn btn-primary">
                         Cerrar proceso
                     </a>
