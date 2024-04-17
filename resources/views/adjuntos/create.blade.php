@@ -16,7 +16,10 @@
                             <div class="col-md-12">
                                 <label for="ruta">Seleccionar archivo</label>
                                 <input type="file" name="ruta" class="form-control"
-                                    accept="image/jpg, image/jpeg, image/png" required>
+                                    accept="image/jpg, image/jpeg, image/png, video/mp4" required>
+                                @error('file')
+                                    <span style="color:red">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <div class="row">
@@ -24,6 +27,9 @@
                                 <div class="form-group">
                                     <label for="descripcion">Ingrese la descripcion</label>
                                     <textarea name="descripcion" class="form-control" required></textarea>
+                                    @error('descripcion')
+                                        <span style="color:red">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -32,7 +38,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary"
-                        onclick="$('create_seguimientos_modal').modal('hide');" data-dismiss="modal">Cancelar</button>
+                        onclick="$('#create_adjuntos_modal').modal('hide');" data-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-primary">Guardar cambios</button>
                 </div>
             </form>

@@ -19,6 +19,7 @@ class CreateAdjuntosTable extends Migration
             $table->bigInteger('ticket_id');
             $table->string('ruta');
             $table->string('descripcion')->nullable();
+            $table->string('mimetype')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

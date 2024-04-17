@@ -23,7 +23,7 @@
                         </select>
                     </div>
                     <div class="form-group" id="div_detalle_proceso_terceros" style="display:none">
-                        <label for="texto"><strong>Ingrese los delattes del proceso cob terceros</strong> </label>
+                        <label for="texto"><strong>Ingrese los detalles del proceso con terceros</strong> </label>
                         <br>
                         <textarea name="detalle_proceso_terceros" id="txt_detalle_proceso_terceros" class="form-control"></textarea>
                     </div>

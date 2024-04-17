@@ -18,7 +18,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary"
-                        onclick="$('create_seguimientos_modal').modal('hide');" data-dismiss="modal">Cancelar</button>
+                        onclick="$('#create_seguimientos_modal').modal('hide');" data-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-primary">Guardar cambios</button>
                 </div>
             </form>

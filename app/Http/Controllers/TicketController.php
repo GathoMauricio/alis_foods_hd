@@ -7,6 +7,7 @@ use App\Models\Ticket;
 use App\Models\Categoria;
 use App\Models\User;
 use App\Models\TicketEstatus;
+use App\Models\Adjunto;
 use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
@@ -75,6 +76,7 @@ class TicketController extends Controller
 
     public function store(Request $request)
     {
+
         $request->validate([
             'categoria' => 'required',
             'subcategoria' => 'required',
@@ -101,7 +103,29 @@ class TicketController extends Controller
             'cerrado_at' => null
         ]);
 
+        $max_size = (int)ini_get('upload_max_filesize') * 10240;
+
+        $rutas = $request->file('file_ruta');
+        $contador = 0;
+        foreach ($rutas as $ruta) {
+            $ruta_completa = $ruta->store('public/adjuntos');
+            $partes = explode('/', $ruta_completa);
+            $nombre_imagen = $partes[2];
+
+            Adjunto::create([
+                'autor_id' => \Auth::user()->id,
+                'ticket_id' => $ticket->id,
+                'ruta' => $nombre_imagen,
+                'descripcion' => $request->file_descripcion[$contador],
+                'mimetype' => $ruta->getClientMimeType(),
+            ]);
+            $contador++;
+        }
+
+
         if ($ticket) {
+
+
 
             $emails = [];
             foreach (User::get() as $user) {
@@ -117,16 +141,19 @@ class TicketController extends Controller
 
             $not->enviarEmail("Nuevo ticket " . $ticket->folio, "notificacion", $data, $emails);
 
-            return response()->json([
-                'error' => 0,
-                'mensaje' => 'Registro creado',
-                'ticket_id' => $ticket->id,
-            ]);
+            // return response()->json([
+            //     'error' => 0,
+            //     'mensaje' => 'Registro creado',
+            //     'ticket_id' => $ticket->id,
+            // ]);
+
+            return redirect()->route('show_tickets', $ticket->id)->with('message', 'El ticket se creó con éxito.');
         } else {
-            return response()->json([
-                'error' => 1,
-                'mensaje' => 'Error durante el proceso',
-            ]);
+            // return response()->json([
+            //     'error' => 1,
+            //     'mensaje' => 'Error durante el proceso',
+            // ]);
+            return redirect()->route('show_tickets', $ticket->id)->with('message', 'Error al crear el ticket.');
         }
     }
 

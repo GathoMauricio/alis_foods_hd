@@ -11,10 +11,10 @@ class AdjuntoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'ruta' => 'required|mimes:jpg,jpeg,png',
+            'ruta' => 'required|mimes:jpg,jpeg,png,mp4',
             'descripcion' => 'required'
         ]);
-
+        $max_size = (int)ini_get('upload_max_filesize') * 10240;
         $ruta_completa = $request->file('ruta')->store('public/adjuntos');
         $partes = explode('/', $ruta_completa);
         $nombre_imagen = $partes[2];
@@ -23,7 +23,8 @@ class AdjuntoController extends Controller
             'autor_id' => $request->autor_id,
             'ticket_id' => $request->ticket_id,
             'ruta' => $nombre_imagen,
-            'descripcion' => $request->descripcion
+            'descripcion' => $request->descripcion,
+            'mimetype' => $request->file('ruta')->getClientMimeType(),
         ]);
 
         if ($adjunto) {

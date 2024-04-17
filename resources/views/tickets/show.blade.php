@@ -265,7 +265,8 @@
                             class="icon icon-plus"></i></a>
                 </div>
             @endif
-            Adjuntos
+            Adjuntos <small style="font-size: 12px;">(image/jpg, image/jpeg, image/png, video/mp4)</small>
+
         </h3>
         <div class="container">
             <div class="row">
@@ -286,8 +287,15 @@
                                 </div>
                             @endcan  --}}
                             <div class="card-body">
-                                <img src="{{ asset('storage/adjuntos/' . $adjunto->ruta) }}" alt="{{ $adjunto->ruta }}"
-                                    style="width:100%;height:200px;">
+                                @if ($adjunto->mimetype == 'video/mp4')
+                                    <video src="{{ asset('storage/adjuntos/' . $adjunto->ruta) }}"
+                                        style="width:100%;height:200px;" controls></video>
+                                @else
+                                    <a href="{{ asset('storage/adjuntos/' . $adjunto->ruta) }}" target="_BLANK">
+                                        <img src="{{ asset('storage/adjuntos/' . $adjunto->ruta) }}"
+                                            alt="{{ $adjunto->ruta }}" style="width:100%;height:200px;">
+                                    </a>
+                                @endif
                             </div>
                             <div class="card-footer">
                                 {{ $adjunto->descripcion }}

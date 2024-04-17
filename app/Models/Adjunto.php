@@ -14,7 +14,7 @@ class Adjunto extends Model
     protected $primaryKey = 'id';
     public $timestamps = true;
 
-    protected $fillable = ['autor_id', 'ticket_id', 'ruta', 'descripcion'];
+    protected $fillable = ['autor_id', 'ticket_id', 'ruta', 'descripcion', 'mimetype'];
 
     public function autor()
     {
