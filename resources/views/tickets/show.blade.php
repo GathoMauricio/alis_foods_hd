@@ -286,6 +286,12 @@
                                     </div>
                                 </div>
                             @endcan  --}}
+                            <div class="card-header">
+                                <h6>
+                                    {{ $adjunto->autor->name }} {{ $adjunto->autor->apaterno }}
+                                    {{ $adjunto->autor->amaterno }}
+                                </h6>
+                            </div>
                             <div class="card-body">
                                 @if ($adjunto->mimetype == 'video/mp4')
                                     <video src="{{ asset('storage/adjuntos/' . $adjunto->ruta) }}"
