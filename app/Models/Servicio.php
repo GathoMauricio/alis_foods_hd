@@ -28,6 +28,6 @@ class Servicio extends Model
 
     public function sintomas()
     {
-        return $this->hasMany('App\Models\Sintoma', 'servicio');
+        return $this->hasMany('App\Models\Sintoma', 'servicio_id');
     }
 }

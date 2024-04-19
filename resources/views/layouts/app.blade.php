@@ -104,7 +104,11 @@
                                             Sucursales
                                         </a>
                                     @endcan
-
+                                    @if (Auth::user()->hasRole('Super usuario') || Auth::user()->hasRole('Administrador'))
+                                        <a class="dropdown-item" href="{{ route('categorias') }}">
+                                            Síntomas y categorías
+                                        </a>
+                                    @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

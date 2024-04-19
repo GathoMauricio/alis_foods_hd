@@ -211,7 +211,12 @@
                     .then(response => {
                         $("#texto_sugerencia").text('');
                         if (Object.keys(response.data).length > 0) {
-                            $("#texto_sugerencia").text(response.data.nombre);
+                            var html = '<ul>';
+                            $.each(response.data.sugerencias, function(index, item) {
+                                html += '<li>' + item.nombre + '</li>';
+                            });
+                            html += '<ul>';
+                            $("#texto_sugerencia").html(html);
                         } else {
                             $("#texto_sugerencia").text("No se encontraron sugerencias");
                         }

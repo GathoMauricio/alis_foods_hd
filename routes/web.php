@@ -47,6 +47,20 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('cargar_servicios', [App\Http\Controllers\AxiosController::class, 'cargarServicios'])->name('cargar_servicios');
     Route::get('cargar_sintomas', [App\Http\Controllers\AxiosController::class, 'cargarSintomas'])->name('cargar_sintomas');
     Route::get('cargar_sugerencia', [App\Http\Controllers\AxiosController::class, 'cargarSugerencia'])->name('cargar_sugerencia');
+
+    //Categorias
+    Route::get('categorias', [App\Http\Controllers\CategoriaController::class, 'index'])->name('categorias');
+    Route::post('store_categoria', [App\Http\Controllers\CategoriaController::class, 'storeCategoria'])->name('store_categoria');
+    Route::post('store_subcategoria', [App\Http\Controllers\CategoriaController::class, 'storeSubcategoria'])->name('store_subcategoria');
+
+    //Subcategorias
+    Route::get('servicios/{id}', [App\Http\Controllers\ServicioController::class, 'index'])->name('servicios');
+    Route::post('store_servicio', [App\Http\Controllers\ServicioController::class, 'storeServicio'])->name('store_servicio');
+    Route::post('store_sintoma', [App\Http\Controllers\ServicioController::class, 'storeSintoma'])->name('store_sintoma');
+
+    //Sugerencias
+    Route::get('sugerencias/{id}', [App\Http\Controllers\SugerenciaController::class, 'index'])->name('sugerencias');
+    Route::post('store_sugerencia', [App\Http\Controllers\SugerenciaController::class, 'storeSugerencia'])->name('store_sugerencia');
 });
 
 
