@@ -117,7 +117,30 @@
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
+                        <label for="distrital_sucursales">Sucursales (Solo si es distrital)</label>
+                        <select name="distrital_sucursales[]" class="form-select select2" multiple>
+                            @foreach ($sucursales as $sucursal)
+                                <option value="{{ $sucursal->id }}">{{ $sucursal->nombre }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="distrital">Distrital</label>
+                            <select name="distrital" class="form-select">
+                                <option value="NO">NO</option>
+                                <option value="SI">SI</option>
+                            </select>
+                            @error('distrital')
+                                <span style="color:red">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="password">Contraseña</label>
                             <input type="password" name="password" placeholder="Contraseña" class="form-control">
@@ -126,7 +149,7 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="password_confirmation">Repetir contraseña</label>
                             <input type="password" name="password_confirmation" placeholder="Repetir contraseña"

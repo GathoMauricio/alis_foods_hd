@@ -7,6 +7,7 @@ use App\Models\User;
 use Spatie\Permission\Models\Role;
 use App\Models\Categoria;
 use App\Models\Sucursal;
+use App\Models\DistritalSucursal;
 
 class UserController extends Controller
 {
@@ -65,7 +66,14 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'foto' => "perfil.jpg",
+            'distrital' => $request->distrital,
         ]);
+
+        if ($request->distrital_sucursales) {
+            foreach ($request->distrital_sucursales as $sucursal_id) {
+                DistritalSucursal::create(['user_id' => $usuario->id, 'sucursal_id' => $sucursal_id]);
+            }
+        }
 
         $usuario->syncRoles($request->roles);
 

@@ -28,6 +28,7 @@
                 <tr>
                     <th>&nbsp;</th>
                     <th>Rol(es)</th>
+                    <th>Distrital</th>
                     <th>Nombre</th>
                     <th>Email</th>
                     <th>Teléfono</th>
@@ -45,6 +46,9 @@
                             @foreach ($usuario->roles as $rol)
                                 {{ $rol->name }}<br>
                             @endforeach
+                        </td>
+                        <td>
+                            {{ $usuario->distrital }}
                         </td>
                         <td>
                             {{ $usuario->name }} {{ $usuario->apaterno }} {{ $usuario->amaterno }}
