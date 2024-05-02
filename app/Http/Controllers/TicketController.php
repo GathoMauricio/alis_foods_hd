@@ -15,6 +15,10 @@ class TicketController extends Controller
 
     public function index()
     {
+        if (Auth::user()->distrital == 'SI') {
+            return redirect('distrital');
+        }
+
         if (Auth::user()->hasRole('Gerente')) {
             $tickets = Ticket::where('estatus_id', '<', 5)->where('autor_id', Auth::user()->id)->orderBy('id', 'DESC')->paginate(15);
         }
@@ -103,24 +107,28 @@ class TicketController extends Controller
             'cerrado_at' => null
         ]);
 
-        $max_size = (int)ini_get('upload_max_filesize') * 10240;
 
-        $rutas = $request->file('file_ruta');
-        $contador = 0;
-        foreach ($rutas as $ruta) {
-            $ruta_completa = $ruta->store('public/adjuntos');
-            $partes = explode('/', $ruta_completa);
-            $nombre_imagen = $partes[2];
+        if ($request->file('file_ruta')) {
+            $max_size = (int)ini_get('upload_max_filesize') * 10240;
 
-            Adjunto::create([
-                'autor_id' => \Auth::user()->id,
-                'ticket_id' => $ticket->id,
-                'ruta' => $nombre_imagen,
-                'descripcion' => $request->file_descripcion[$contador],
-                'mimetype' => $ruta->getClientMimeType(),
-            ]);
-            $contador++;
+            $rutas = $request->file('file_ruta');
+            $contador = 0;
+            foreach ($rutas as $ruta) {
+                $ruta_completa = $ruta->store('public/adjuntos');
+                $partes = explode('/', $ruta_completa);
+                $nombre_imagen = $partes[2];
+
+                Adjunto::create([
+                    'autor_id' => \Auth::user()->id,
+                    'ticket_id' => $ticket->id,
+                    'ruta' => $nombre_imagen,
+                    'descripcion' => $request->file_descripcion[$contador],
+                    'mimetype' => $ruta->getClientMimeType(),
+                ]);
+                $contador++;
+            }
         }
+
 
 
         if ($ticket) {

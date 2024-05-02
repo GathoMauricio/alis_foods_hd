@@ -91,9 +91,15 @@
                                             Distrital
                                         </a>
                                     @endif
-                                    <a class="dropdown-item" href="{{ route('historico') }}">
-                                        Histórico
-                                    </a>
+                                    @if (\Auth::user()->distrital == 'SI')
+                                        <a class="dropdown-item" href="{{ route('historico_distrital') }}">
+                                            Histórico
+                                        </a>
+                                    @else
+                                        <a class="dropdown-item" href="{{ route('historico') }}">
+                                            Histórico
+                                        </a>
+                                    @endif
                                     @can('modulo_roles_permisos')
                                         <a class="dropdown-item" href="{{ route('roles_permisos') }}">
                                             Roles y permisos

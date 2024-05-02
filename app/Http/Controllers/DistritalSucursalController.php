@@ -13,11 +13,12 @@ class DistritalSucursalController extends Controller
     {
         $distrital_sucursales_ids = \Auth::user()->distrital_sucursales->pluck('sucursal_id')->toArray();
 
-        $tickets = Ticket::where(function ($q) use ($distrital_sucursales_ids) {
-            foreach ($distrital_sucursales_ids as $sucursal_id) {
-                $q->orWhere('sucursales.id', $sucursal_id);
-            }
-        })
+        $tickets = Ticket::where('tickets.estatus_id', '<', 5)
+            ->where(function ($q) use ($distrital_sucursales_ids) {
+                foreach ($distrital_sucursales_ids as $sucursal_id) {
+                    $q->orWhere('sucursales.id', $sucursal_id);
+                }
+            })
             ->leftJoin('users', 'tickets.autor_id', 'users.id')
             ->leftJoin('sucursales', 'users.sucursal_id', 'sucursales.id')
             ->orderBy('tickets.id', 'DESC')
@@ -31,5 +32,22 @@ class DistritalSucursalController extends Controller
         $tecnicos = User::where('categoria_id', $ticket->sintoma->servicio->subcategoria->categoria->id)->orderBy('name')->get();
         $estatuses = TicketEstatus::get();
         return view('distrital.show', compact('ticket', 'tecnicos', 'estatuses'));
+    }
+
+    public function historico()
+    {
+        $distrital_sucursales_ids = \Auth::user()->distrital_sucursales->pluck('sucursal_id')->toArray();
+
+        $tickets = Ticket::where('tickets.estatus_id', '>=', 5)
+            ->where(function ($q) use ($distrital_sucursales_ids) {
+                foreach ($distrital_sucursales_ids as $sucursal_id) {
+                    $q->orWhere('sucursales.id', $sucursal_id);
+                }
+            })
+            ->leftJoin('users', 'tickets.autor_id', 'users.id')
+            ->leftJoin('sucursales', 'users.sucursal_id', 'sucursales.id')
+            ->orderBy('tickets.id', 'DESC')
+            ->paginate(15);
+        return view('distrital.historico', compact('tickets'));
     }
 }

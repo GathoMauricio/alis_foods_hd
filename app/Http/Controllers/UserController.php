@@ -35,7 +35,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'roles' => 'required',
+            //'roles' => 'required',
             'name' => 'required',
             'apaterno' => 'required',
             'telefono' => 'required',
@@ -94,7 +94,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $validations = [
-            'roles' => 'required',
+            //'roles' => 'required',
             'name' => 'required',
             'apaterno' => 'required',
             'telefono' => 'required',
