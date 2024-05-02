@@ -128,7 +128,7 @@
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="distrital">Distrital</label>
                             <select name="distrital" class="form-select">
@@ -140,7 +140,7 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="password">Contraseña</label>
                             <input type="password" name="password" placeholder="Contraseña" class="form-control">
@@ -149,7 +149,7 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="password_confirmation">Repetir contraseña</label>
                             <input type="password" name="password_confirmation" placeholder="Repetir contraseña"

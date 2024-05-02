@@ -14,4 +14,14 @@ class DistritalSucursal extends Model
     public $timestamps = true;
 
     protected $fillable = ['user_id', 'sucursal_id'];
+
+    public function sucursal()
+    {
+        return $this->belongsTo(
+            'App\Models\Sucursal',
+            'sucursal_id',
+            'id'
+        )
+            ->withDefault();
+    }
 }

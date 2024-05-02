@@ -124,7 +124,39 @@
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
+                        <label for="distrital_sucursales">Sucursales (Solo si es distrital)</label>
+                        <select name="distrital_sucursales[]" class="form-select select2" multiple>
+                            @foreach ($sucursales as $sucursal)
+                                <option value="{{ $sucursal->id }}"
+                                    @if (is_array(old('distrital_sucursales')) && in_array($sucursal->id, old('distrital_sucursales'))) selected
+                                    @elseif(in_array($sucursal->id, $usuario->distrital_sucursales->pluck('sucursal_id')->toArray()))
+                                        selected @endif>
+                                    {{ $sucursal->nombre }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="distrital">Distrital</label>
+                            <select name="distrital" class="form-select">
+                                @if ($usuario->distrital == 'SI')
+                                    <option value="NO">NO</option>
+                                    <option value="SI" selected>SI</option>
+                                @else
+                                    <option value="NO" selected>NO</option>
+                                    <option value="SI">SI</option>
+                                @endif
+                            </select>
+                            @error('distrital')
+                                <span style="color:red">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="password">Contraseña</label>
                             <input type="password" name="password" placeholder="Contraseña" class="form-control">
@@ -133,7 +165,7 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="password_confirmation">Repetir contraseña</label>
                             <input type="password" name="password_confirmation" placeholder="Repetir contraseña"

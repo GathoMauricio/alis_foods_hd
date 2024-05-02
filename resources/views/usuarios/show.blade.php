@@ -60,6 +60,28 @@
                 </div>
             </div>
             <br>
+            <div class="row">
+                <div class="col-md-6">
+                    Distrital:
+                </div>
+                <div class="col-md-6">
+                    {{ $usuario->distrital }}
+                </div>
+            </div>
+            <br>
+            @if ($usuario->distrital == 'SI')
+                <div class="row">
+                    <div class="col-md-6">
+                        Sucursales distritales:
+                    </div>
+                    <div class="col-md-6">
+                        @foreach ($usuario->distrital_sucursales as $item)
+                            {{ $item->sucursal->nombre }}<br>
+                        @endforeach
+                    </div>
+                </div>
+                <br>
+            @endif
         </div>
         {{--  Mostrar info dependiendo si tiene el rol asignado  --}}
         {{--  {{ $usuario }}

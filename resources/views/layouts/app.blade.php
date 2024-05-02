@@ -86,6 +86,11 @@
                                     <a class="dropdown-item" href="{{ route('/') }}">
                                         Inicio
                                     </a>
+                                    @if (\Auth::user()->distrital == 'SI')
+                                        <a class="dropdown-item" href="{{ route('historico') }}">
+                                            Distrital
+                                        </a>
+                                    @endif
                                     <a class="dropdown-item" href="{{ route('historico') }}">
                                         Histórico
                                     </a>

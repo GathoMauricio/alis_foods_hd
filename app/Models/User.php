@@ -70,4 +70,9 @@ class User extends Authenticatable
         )
             ->withDefault();
     }
+
+    public function distrital_sucursales()
+    {
+        return $this->hasMany('App\Models\DistritalSucursal', 'user_id');
+    }
 }

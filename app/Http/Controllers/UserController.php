@@ -125,9 +125,19 @@ class UserController extends Controller
         $usuario->amaterno = $request->amaterno;
         $usuario->telefono = $request->telefono;
         $usuario->telefono_emergencia = $request->telefono_emergencia;
+        $usuario->distrital = $request->distrital;
 
         if ($request->password) {
             $usuario->password = bcrypt($request->password);
+        }
+
+        if ($request->distrital == 'SI') {
+            DistritalSucursal::where('user_id', $usuario->id)->delete();
+            if ($request->distrital_sucursales) {
+                foreach ($request->distrital_sucursales as $sucursal_id) {
+                    DistritalSucursal::create(['user_id' => $usuario->id, 'sucursal_id' => $sucursal_id]);
+                }
+            }
         }
 
         $usuario->syncRoles($request->roles);
