@@ -13,7 +13,7 @@ class DistritalSucursalController extends Controller
     {
         $distrital_sucursales_ids = \Auth::user()->distrital_sucursales->pluck('sucursal_id')->toArray();
 
-        $tickets = Ticket::where('tickets.estatus_id', '<', 5)
+        $tickets = Ticket::select('tickets.*')->where('tickets.estatus_id', '<', 5)
             ->where(function ($q) use ($distrital_sucursales_ids) {
                 foreach ($distrital_sucursales_ids as $sucursal_id) {
                     $q->orWhere('sucursales.id', $sucursal_id);
@@ -38,7 +38,7 @@ class DistritalSucursalController extends Controller
     {
         $distrital_sucursales_ids = \Auth::user()->distrital_sucursales->pluck('sucursal_id')->toArray();
 
-        $tickets = Ticket::where('tickets.estatus_id', '>=', 5)
+        $tickets = Ticket::select('tickets.*')->where('tickets.estatus_id', '>=', 5)
             ->where(function ($q) use ($distrital_sucursales_ids) {
                 foreach ($distrital_sucursales_ids as $sucursal_id) {
                     $q->orWhere('sucursales.id', $sucursal_id);
