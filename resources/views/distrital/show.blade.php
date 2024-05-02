@@ -3,7 +3,7 @@
 @section('content')
     <div class="container p-3" style="background-color: white;border: solid 5px #f4f6f9;">
         <h3>
-            Detalle ticket {{ $ticket->folio }}
+            Detalle ticket {{ $ticket->folio }} (Distrital)
         </h3>
         <div class="container">
             <div class="row">
