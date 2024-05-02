@@ -3,11 +3,6 @@
 @section('content')
     <div class="container p-3" style="background-color: white;border: solid 5px #f4f6f9;">
         <h3>
-            @can('crear_tickets')
-                <div style="float: right;">
-                    <a href="{{ route('crear_tickets') }}" class="btn btn-primary" title="Nuevo"><i class="icon icon-plus"></i></a>
-                </div>
-            @endcan
             Tickets
         </h3>
         {{ $tickets->links('pagination::bootstrap-4') }}
@@ -48,7 +43,7 @@
                         <td style="font-size:12px;">{{ $ticket->descripcion }}</td>
                         <td style="font-size:12px;">{{ $ticket->created_at }}</td>
                         <td>
-                            <a href="{{ route('show_tickets', $ticket->id) }}">Detalles</a>
+                            <a href="{{ route('show_distrital', $ticket->id) }}">Detalles</a>
                         </td>
                     </tr>
                 @endforeach

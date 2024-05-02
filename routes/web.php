@@ -61,6 +61,10 @@ Route::group(['middleware' => ['auth']], function () {
     //Sugerencias
     Route::get('sugerencias/{id}', [App\Http\Controllers\SugerenciaController::class, 'index'])->name('sugerencias');
     Route::post('store_sugerencia', [App\Http\Controllers\SugerenciaController::class, 'storeSugerencia'])->name('store_sugerencia');
+
+    //Distrital
+    Route::get('distrital', [App\Http\Controllers\DistritalSucursalController::class, 'index'])->name('distrital');
+    Route::get('show_distrital/{id}', [App\Http\Controllers\DistritalSucursalController::class, 'show'])->name('show_distrital');
 });
 
 

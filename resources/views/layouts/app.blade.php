@@ -87,7 +87,7 @@
                                         Inicio
                                     </a>
                                     @if (\Auth::user()->distrital == 'SI')
-                                        <a class="dropdown-item" href="{{ route('historico') }}">
+                                        <a class="dropdown-item" href="{{ route('distrital') }}">
                                             Distrital
                                         </a>
                                     @endif
