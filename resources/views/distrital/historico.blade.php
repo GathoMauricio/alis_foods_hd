@@ -27,6 +27,8 @@
                         <td style="font-size:12px;">{{ $ticket->estatus->nombre }}</td>
                         <td style="font-size:12px;">
                             {{ $ticket->autor->name }} {{ $ticket->autor->amaterno }} {{ $ticket->autor->apaterno }}
+                            <br>
+                            <strong>{{ $ticket->autor->sucursal->nombre }}</strong>
                         </td>
                         <td style="font-size:12px;">
                             @if ($ticket->tecnico->id)
