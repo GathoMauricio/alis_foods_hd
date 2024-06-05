@@ -80,7 +80,21 @@ return [
     |
     */
 
-    'locale' => 'en',
+    //'timezone' => 'America/Mexico_City',
+    'timezone' => 'America/Mazatlan',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Locale Configuration
+    |--------------------------------------------------------------------------
+    |
+    | The application locale determines the default locale that will be used
+    | by the translation service provider. You are free to set this value
+    | to any of the locales which will be supported by the application.
+    |
+    */
+
+    'locale' => 'es_ES',
 
     /*
     |--------------------------------------------------------------------------
@@ -93,20 +107,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Faker Locale
-    |--------------------------------------------------------------------------
-    |
-    | This locale will be used by the Faker PHP library when generating fake
-    | data for your database seeds. For example, this will be used to get
-    | localized telephone numbers, street address information and more.
-    |
-    */
-
-    'faker_locale' => 'en_US',
+    'fallback_locale' => 'es_ES',
 
     /*
     |--------------------------------------------------------------------------
