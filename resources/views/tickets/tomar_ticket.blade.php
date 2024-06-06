@@ -19,6 +19,7 @@
                             onchange="tipoEstatusProceso(this.value)">
                             <option value>---Seleccione--</option>
                             <option value="2">En proceso con terceros</option>
+                            <option value="6">En espera de respuesta de cliente</option>
                             <option value="3">Iniciar proceso</option>
                         </select>
                     </div>

@@ -9,7 +9,9 @@
                         Tomar ticket
                     </a>
                 @endif
-                @if (Auth::user()->hasRole('Técnico') && $ticket->estatus_id == 2 && $ticket->tecnico_id == Auth::user()->id)
+                @if (Auth::user()->hasRole('Técnico') &&
+                        ($ticket->estatus_id == 2 || $ticket->estatus_id == 6) &&
+                        $ticket->tecnico_id == Auth::user()->id)
                     <a href="javascript:void(0)" onclick="iniciarProceso()" class="btn btn-primary">
                         Iniciar proceso
                     </a>
@@ -333,7 +335,7 @@
                 $("#tomar_ticket_modal").modal('show');
             }
         @endif
-        @if (Auth::user()->hasRole('Técnico') && $ticket->estatus->id == 2)
+        @if (Auth::user()->hasRole('Técnico') && ($ticket->estatus->id == 2 || $ticket->estatus->id == 6))
             function iniciarProceso() {
                 alertify.confirm('Aviso', '¿Iniciar proceso?', function() {
                     $("#form_iniciar_proceso").submit();

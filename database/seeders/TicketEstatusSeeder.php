@@ -20,5 +20,6 @@ class TicketEstatusSeeder extends Seeder
         TicketEstatus::create(['id' => 3, 'nombre' => 'En proceso']);
         TicketEstatus::create(['id' => 4, 'nombre' => 'Cerrado']);
         TicketEstatus::create(['id' => 5, 'nombre' => 'Finalizado']);
+        TicketEstatus::create(['id' => 6, 'nombre' => 'En espera de respuesta de cliente']);
     }
 }
