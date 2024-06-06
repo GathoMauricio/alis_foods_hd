@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container p-3" style="background-color: white;border: solid 5px #f4f6f9;">
+        Time {{ date_default_timezone_get() }} {{ date('Y-m-d H:i:s') }}
         <h3>
             <div style="float:right">
                 @if (Auth::user()->hasRole('Técnico') && $ticket->estatus_id == 1)
