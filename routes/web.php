@@ -13,6 +13,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('show_tickets/{id}', [App\Http\Controllers\TicketController::class, 'show'])->name('show_tickets');
     Route::put('estatus_ticket', [App\Http\Controllers\TicketController::class, 'estatusTicket'])->name('estatus_ticket');
     Route::get('historico', [App\Http\Controllers\TicketController::class, 'historico'])->name('historico');
+    Route::put('asignar_ticket', [App\Http\Controllers\TicketController::class, 'asignarTicket'])->name('asignar_ticket');
 
     //Roles y permisos
     Route::get('roles_permisos', [App\Http\Controllers\RolesPermisosController::class, 'index'])->name('roles_permisos')->middleware('permission:modulo_roles_permisos');

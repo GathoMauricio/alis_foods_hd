@@ -5,14 +5,14 @@
         <h3>
             <div style="float:right">
                 @if (Auth::user()->hasRole('Técnico') && $ticket->estatus_id == 1)
-                    <a href="javascript:void(0)" onclick="tomarTicket()" class="btn btn-primary">
+                    <a href="javascript:void(0)" onclick="tomarTicket()" class="btn btn-primary" style="width: 100%">
                         Tomar ticket
                     </a>
                 @endif
                 @if (Auth::user()->hasRole('Técnico') &&
                         ($ticket->estatus_id == 2 || $ticket->estatus_id == 6) &&
                         $ticket->tecnico_id == Auth::user()->id)
-                    <a href="javascript:void(0)" onclick="iniciarProceso()" class="btn btn-primary">
+                    <a href="javascript:void(0)" onclick="iniciarProceso()" class="btn btn-primary" style="width: 100%">
                         Iniciar proceso
                     </a>
                     <form action="{{ route('estatus_ticket') }}" id="form_iniciar_proceso" method="POST"
@@ -24,7 +24,7 @@
                     </form>
                 @endif
                 @if (Auth::user()->hasRole('Técnico') && $ticket->estatus_id == 3 && $ticket->tecnico_id == Auth::user()->id)
-                    <a href="javascript:void(0)" onclick="cerrarProceso()" class="btn btn-primary">
+                    <a href="javascript:void(0)" onclick="cerrarProceso()" class="btn btn-primary" style="width: 100%">
                         Cerrar proceso
                     </a>
                     <form action="{{ route('estatus_ticket') }}" id="form_cerrar_proceso" method="POST"
@@ -35,14 +35,64 @@
                         <input type="hidden" name="estatus_id" value="4">
                     </form>
                 @endif
-                @if (Auth::user()->id == $ticket->autor->id && $ticket->estatus_id == 4)
-                    <a href="javascript:void(0)" onclick="finalizarTicket()" class="btn btn-primary">
+                @if (
+                    (Auth::user()->id == $ticket->autor->id && $ticket->estatus_id == 4) ||
+                        ($ticket->estatus_id == 4 && Auth::user()->hasRole('Administrador')))
+                    <a href="javascript:void(0)" onclick="finalizarTicket()" class="btn btn-primary" style="width: 100%">
                         Finalizar ticket
                     </a>
                 @endif
+
             </div>
             Detalle ticket {{ $ticket->folio }}
         </h3>
+        <div style="float:right;">
+            @if (Auth::user()->hasRole('Administrador') || Auth::user()->hasRole('Gerente'))
+                <br>
+                <br>
+                <div
+                    style="box-shadow: 3px 4px 5px 0px rgba(0,0,0,0.75);
+                        -webkit-box-shadow: 3px 4px 5px 0px rgba(0,0,0,0.75);
+                        -moz-box-shadow: 3px 4px 5px 0px rgba(0,0,0,0.75);padding:5px;">
+                    <label>Asignar ticket a:</label>
+                    <br>
+                    <form action="{{ route('asignar_ticket') }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
+
+                        <select name="tecnico_id" class="select2" style="width:100%;" required>
+                            <option value>Técnico</option>
+                            @foreach ($tecnicos as $tecnico)
+                                @if ($ticket->tecnico_id == $tecnico->id)
+                                    <option value="{{ $tecnico->id }}" selected>{{ $tecnico->name }}
+                                        {{ $tecnico->apaterno }}
+                                        {{ $tecnico->amaterno }}</option>
+                                @else
+                                    <option value="{{ $tecnico->id }}">{{ $tecnico->name }} {{ $tecnico->apaterno }}
+                                        {{ $tecnico->amaterno }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                        <br>
+
+                        <select name="estatus_id" class="select2" style="width:100%;" required>
+                            <option value>Estatus</option>
+                            @foreach ($estatuses as $estatus)
+                                @if ($ticket->estatus_id == $estatus->id)
+                                    <option value="{{ $estatus->id }}" selected>{{ $estatus->nombre }}</option>
+                                @else
+                                    <option value="{{ $estatus->id }}">{{ $estatus->nombre }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                        <br>
+                        <input type="submit" class="btn btn-primary" style="width: 100%" value="Asignar">
+                    </form>
+
+                </div>
+            @endif
+        </div>
         <div class="container">
             <div class="row">
                 <div class="col-md-6">

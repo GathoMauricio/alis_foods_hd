@@ -220,4 +220,13 @@ class TicketController extends Controller
             return redirect()->route('show_tickets', $request->ticket_id)->with('message', 'El ticket ha sido actualizado');
         }
     }
+    public function asignarTicket(Request $request)
+    {
+        $ticket = Ticket::findOrFail($request->ticket_id);
+        $ticket->tecnico_id = $request->tecnico_id;
+        $ticket->estatus_id = $request->estatus_id;
+        if ($ticket->save()) {
+            return redirect()->route('show_tickets', $request->ticket_id)->with('message', 'El ticket ha sido actualizado');
+        }
+    }
 }
