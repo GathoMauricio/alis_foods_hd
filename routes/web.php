@@ -39,9 +39,11 @@ Route::group(['middleware' => ['auth']], function () {
 
     //Seguimientos
     Route::post('store_seguimientos', [App\Http\Controllers\SeguimientoController::class, 'store'])->name('store_seguimientos');
+    Route::delete('delete_seguimientos_ticket/{id}', [App\Http\Controllers\SeguimientoController::class, 'destroy'])->name('delete_seguimientos_ticket');
 
     //Adjuntos
     Route::post('store_adjuntos', [App\Http\Controllers\AdjuntoController::class, 'store'])->name('store_adjuntos');
+    Route::delete('delete_adjuntos_ticket/{id}', [App\Http\Controllers\AdjuntoController::class, 'destroy'])->name('delete_adjuntos_ticket');
 
     #AxiosData
     Route::get('cargar_subcategorias', [App\Http\Controllers\AxiosController::class, 'cargarSubcategorias'])->name('cargar_subcategorias');

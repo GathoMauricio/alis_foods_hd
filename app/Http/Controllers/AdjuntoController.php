@@ -45,4 +45,13 @@ class AdjuntoController extends Controller
             return redirect()->route('show_tickets', $request->ticket_id)->with('message', 'El adjunto se creó con éxito.');
         }
     }
+
+    public function destroy($id)
+    {
+        $adjunto = Adjunto::findOrFail($id);
+        $ticket_id = $adjunto->ticket_id;
+        if ($adjunto->delete()) {
+            return redirect()->route('show_tickets', $ticket_id)->with('message', 'El adjunto se elimin+o con éxito.');
+        }
+    }
 }

@@ -224,7 +224,17 @@
                                 {{ $seguimiento->autor->amaterno }}
                             </td>
                             <td>{{ $seguimiento->texto }}</td>
-                            <td></td>
+                            <td>
+                                @if ($seguimiento->autor_id == Auth::user()->id || Auth::user()->hasRole('Administrador'))
+                                    <a href="javascript:void(0);" onclick="deleteSeguimiento({{ $seguimiento->id }});"
+                                        class="btn btn-danger" title="Eliminar"><i class="icon icon-bin"></i></a>
+                                    <form action="{{ route('delete_seguimientos_ticket', $seguimiento->id) }}"
+                                        id="form_delete_seguimiento_{{ $seguimiento->id }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
+                                @endif
+                            </td>
                         </tr>
                     @empty
                         <tr>
@@ -325,20 +335,21 @@
                 @forelse ($ticket->adjuntos as $adjunto)
                     <div class="col-md-3 text-center">
                         <div class="card">
-                            {{--  @can('eliminar_medio_residencias')
-                                <div class="card-header">
+
+                            <div class="card-header">
+
+                                @if ($adjunto->autor_id == Auth::user()->id || Auth::user()->hasRole('Administrador'))
                                     <div style="float: right;">
-                                        <a href="javascript:void(0);" onclick="deleteMedio({{ $medio->id }});"
+                                        <a href="javascript:void(0);" onclick="deleteAdjunto({{ $adjunto->id }});"
                                             class="btn btn-danger" title="Eliminar"><i class="icon icon-bin"></i></a>
-                                        <form action="{{ route('delete_media_residencias', $medio->id) }}"
-                                            id="form_delete_medio_{{ $medio->id }}" method="POST">
+                                        <form action="{{ route('delete_adjuntos_ticket', $adjunto->id) }}"
+                                            id="form_delete_adjunto_{{ $adjunto->id }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                         </form>
                                     </div>
-                                </div>
-                            @endcan  --}}
-                            <div class="card-header">
+                                @endif
+
                                 <h6>
                                     {{ $adjunto->autor->name }} {{ $adjunto->autor->apaterno }}
                                     {{ $adjunto->autor->amaterno }}
@@ -404,5 +415,16 @@
                 $("#finalizar_ticket_modal").modal('show');
             }
         @endif
+        function deleteAdjunto(adjunto_id) {
+            alertify.confirm('Aviso', 'Eliminar?', function() {
+                $("#form_delete_adjunto_" + adjunto_id).submit();
+            }, function() {});
+        }
+
+        function deleteSeguimiento(seguimiento_id) {
+            alertify.confirm('Aviso', 'Eliminar?', function() {
+                $("#form_delete_seguimiento_" + seguimiento_id).submit();
+            }, function() {});
+        }
     </script>
 @endsection

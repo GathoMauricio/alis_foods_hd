@@ -40,4 +40,13 @@ class SeguimientoController extends Controller
             return redirect()->route('show_tickets', $request->ticket_id)->with('message', 'El seguimiento se creó con éxito.');
         }
     }
+
+    public function destroy($id)
+    {
+        $seguimiento = Seguimiento::findOrFail($id);
+        $ticket_id = $seguimiento->ticket_id;
+        if ($seguimiento->delete()) {
+            return redirect()->route('show_tickets', $ticket_id)->with('message', 'El seguimiento se eliminó con éxito.');
+        }
+    }
 }
