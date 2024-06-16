@@ -196,7 +196,7 @@
     </div>
     <div class="container p-3" style="background-color: white;border: solid 5px #f4f6f9;">
         <h3>
-            @if ($ticket->estatus_id < 5)
+            @if ($ticket->estatus_id < 5 || $ticket->estatus_id > 5)
                 <div style="float: right;">
                     <a href="javascript:void(0)" onclick="createSeguimiento();" class="btn btn-primary" title="Nuevo"><i
                             class="icon icon-plus"></i></a>
@@ -245,7 +245,7 @@
             </table>
         </div>
     </div>
-    @if ($ticket->estatus_id >= 5)
+    @if ($ticket->estatus_id == 5)
         <div class="container p-3" style="background-color: white;border: solid 5px #f4f6f9;">
             <h3>Histórico</h3>
             <div class="container">
@@ -321,7 +321,7 @@
     @endif
     <div class="container p-3" style="background-color: white;border: solid 5px #f4f6f9;">
         <h3>
-            @if ($ticket->estatus_id < 5)
+            @if ($ticket->estatus_id < 5 || $ticket->estatus_id > 5)
                 <div style="float: right;">
                     <a href="javascript:void(0)" onclick="createAdjunto();" class="btn btn-primary" title="Nuevo"><i
                             class="icon icon-plus"></i></a>
