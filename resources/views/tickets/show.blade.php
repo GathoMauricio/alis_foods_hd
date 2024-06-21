@@ -47,7 +47,7 @@
             Detalle ticket {{ $ticket->folio }}
         </h3>
         <div style="float:right;">
-            @if (Auth::user()->hasRole('Administrador') || Auth::user()->hasRole('Gerente'))
+            @if (Auth::user()->hasRole('Administrador') || Auth::user()->hasRole('Técnico'))
                 <br>
                 <br>
                 <div
