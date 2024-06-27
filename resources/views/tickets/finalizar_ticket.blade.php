@@ -20,8 +20,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="$('#tomar_ticket_modal').modal('hide');"
-                        data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-secondary"
+                        onclick="$('#finalizar_ticket_modal').modal('hide');" data-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-primary">Guardar cambios</button>
                 </div>
             </form>
