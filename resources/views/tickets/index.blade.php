@@ -26,33 +26,44 @@
                 </tr>
             </thead>
             <tbody>
+                @php
+                    $countTickets = 0;
+                @endphp
                 @foreach ($tickets as $ticket)
-                    <tr>
-                        <th style="font-size:14;">{{ $ticket->folio }}</th>
-                        <td style="font-size:12px;">{{ $ticket->estatus->nombre }}</td>
-                        <td style="font-size:12px;">
-                            {{ $ticket->autor->name }} {{ $ticket->autor->amaterno }} {{ $ticket->autor->apaterno }}
-                            <br>
-                            <strong>{{ $ticket->autor->sucursal->nombre }}</strong>
-                        </td>
-                        <td style="font-size:12px;">
-                            @if ($ticket->tecnico->id)
-                                {{ $ticket->tecnico->name }} {{ $ticket->tecnico->amaterno }}
-                                {{ $ticket->tecnico->apaterno }}
-                            @else
-                                No disponible
-                            @endif
-                        </td>
-                        <td style="font-size:12px;">{{ $ticket->sintoma->servicio->subcategoria->categoria->nombre }}</td>
-                        <td style="font-size:12px;">{{ $ticket->sintoma->nombre }}</td>
-                        <td style="font-size:12px;">{{ $ticket->descripcion }}</td>
-                        <td style="font-size:12px;">{{ $ticket->created_at }}</td>
-                        <td>
-                            <a href="{{ route('show_tickets', $ticket->id) }}">Detalles</a>
-                        </td>
+                    @if (is_null($ticket->tecnico_id) || $ticket->tecnico_id == Auth::user()->id || Auth::user()->hasRole('Administrador'))
+                        @php
+                            $countTickets++;
+                        @endphp
+                        <tr>
+                            <th style="font-size:14;">{{ $ticket->folio }}</th>
+                            <td style="font-size:12px;">{{ $ticket->estatus->nombre }}</td>
+                            <td style="font-size:12px;">
+                                {{ $ticket->autor->name }} {{ $ticket->autor->amaterno }} {{ $ticket->autor->apaterno }}
+                                <br>
+                                <strong>{{ $ticket->autor->sucursal->nombre }}</strong>
+                            </td>
+                            <td style="font-size:12px;">
+                                @if ($ticket->tecnico->id)
+                                    {{ $ticket->tecnico->name }} {{ $ticket->tecnico->amaterno }}
+                                    {{ $ticket->tecnico->apaterno }}
+                                    <br>
+                                    <strong>({{ $ticket->tecnico->categoria->nombre }})</strong>
+                                @else
+                                    No disponible
+                                @endif
+                            </td>
+                            <td style="font-size:12px;">{{ $ticket->sintoma->servicio->subcategoria->categoria->nombre }}
+                            </td>
+                            <td style="font-size:12px;">{{ $ticket->sintoma->nombre }}</td>
+                            <td style="font-size:12px;">{{ $ticket->descripcion }}</td>
+                            <td style="font-size:12px;">{{ $ticket->created_at }}</td>
+                            <td>
+                                <a href="{{ route('show_tickets', $ticket['id']) }}">Detalles</a>
+                            </td>
+                    @endif
                     </tr>
                 @endforeach
-                @if (count($tickets) <= 0)
+                @if ($countTickets <= 0)
                     <tr>
                         <th colspan="9" class="text-center">Sin registros</th>
                     </tr>

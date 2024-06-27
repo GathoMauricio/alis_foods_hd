@@ -47,7 +47,7 @@
             Detalle ticket {{ $ticket->folio }}
         </h3>
         <div style="float:right;">
-            @if (Auth::user()->hasRole('Administrador') || Auth::user()->hasRole('Técnico'))
+            @if (Auth::user()->hasRole('Administrador') && Auth::user()->hasRole('Técnico'))
                 <br>
                 <br>
                 <div
@@ -62,15 +62,18 @@
                         <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
 
                         <select name="tecnico_id" class="select2" style="width:100%;" required>
-                            <option value>Técnico</option>
+                            <option value>Técnicos en {{ $ticket->sintoma->servicio->subcategoria->categoria->nombre }}
+                            </option>
                             @foreach ($tecnicos as $tecnico)
                                 @if ($ticket->tecnico_id == $tecnico->id)
                                     <option value="{{ $tecnico->id }}" selected>{{ $tecnico->name }}
                                         {{ $tecnico->apaterno }}
-                                        {{ $tecnico->amaterno }}</option>
+                                        {{ $tecnico->amaterno }}
+                                    </option>
                                 @else
                                     <option value="{{ $tecnico->id }}">{{ $tecnico->name }} {{ $tecnico->apaterno }}
-                                        {{ $tecnico->amaterno }}</option>
+                                        {{ $tecnico->amaterno }}
+                                    </option>
                                 @endif
                             @endforeach
                         </select>
@@ -410,7 +413,7 @@
                 }, function() {});
             }
         @endif
-        @if (Auth::user()->id == $ticket->autor->id && $ticket->estatus->id == 4)
+        @if ((Auth::user()->id == $ticket->autor->id && $ticket->estatus->id == 4) || Auth::user()->hasRole('Administrador'))
             function finalizarTicket() {
                 $("#finalizar_ticket_modal").modal('show');
             }
