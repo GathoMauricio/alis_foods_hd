@@ -4,7 +4,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Agregar seguimiento</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Agregar adjunto</h5>
             </div>
             <form action="{{ route('store_adjuntos') }}" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -16,7 +16,7 @@
                             <div class="col-md-12">
                                 <label for="ruta">Seleccionar archivo</label>
                                 <input type="file" name="ruta" class="form-control"
-                                    accept="image/jpg, image/jpeg, image/png, video/mp4" required>
+                                    accept="image/jpg, image/jpeg, image/png, application/pdf" required>
                                 @error('file')
                                     <span style="color:red">{{ $message }}</span>
                                 @enderror

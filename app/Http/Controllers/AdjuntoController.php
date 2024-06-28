@@ -11,7 +11,7 @@ class AdjuntoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'ruta' => 'required|mimes:jpg,jpeg,png,mp4',
+            'ruta' => 'required|mimes:jpg,jpeg,png,mp4,pdf',
             'descripcion' => 'required'
         ]);
         $max_size = (int)ini_get('upload_max_filesize') * 10240;

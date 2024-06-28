@@ -330,7 +330,7 @@
                             class="icon icon-plus"></i></a>
                 </div>
             @endif
-            Adjuntos <small style="font-size: 12px;">(image/jpg, image/jpeg, image/png, video/mp4)</small>
+            Adjuntos <small style="font-size: 12px;">(image/jpg, image/jpeg, image/png, document/pdf)</small>
 
         </h3>
         <div class="container">
@@ -359,9 +359,14 @@
                                 </h6>
                             </div>
                             <div class="card-body">
-                                @if ($adjunto->mimetype == 'video/mp4')
+                                {{--  @if ($adjunto->mimetype == 'video/mp4')
                                     <video src="{{ asset('storage/adjuntos/' . $adjunto->ruta) }}"
-                                        style="width:100%;height:200px;" controls></video>
+                                        style="width:100%;height:200px;" controls></video>  --}}
+                                @if ($adjunto->mimetype == 'application/pdf')
+                                    <a href="{{ asset('storage/adjuntos/' . $adjunto->ruta) }}" target="_BLANK">
+                                        <img src="{{ asset('img/pdf.png') }}" alt="{{ $adjunto->ruta }}"
+                                            style="width:100%;height:200px;">
+                                    </a>
                                 @else
                                     <a href="{{ asset('storage/adjuntos/' . $adjunto->ruta) }}" target="_BLANK">
                                         <img src="{{ asset('storage/adjuntos/' . $adjunto->ruta) }}"
@@ -371,6 +376,10 @@
                             </div>
                             <div class="card-footer">
                                 {{ $adjunto->descripcion }}
+                                <br>
+                                <div style="font-weight: bold; font-size:9px;">
+                                    {{ $adjunto->created_at }} hrs.
+                                </div>
                             </div>
                         </div>
                     </div>
