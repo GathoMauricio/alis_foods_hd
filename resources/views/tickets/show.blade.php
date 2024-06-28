@@ -367,6 +367,9 @@
                                         <img src="{{ asset('img/pdf.png') }}" alt="{{ $adjunto->ruta }}"
                                             style="width:100%;height:200px;">
                                     </a>
+                                @elseif($adjunto->mimetype == 'video/mp4')
+                                    <video src="{{ asset('storage/adjuntos/' . $adjunto->ruta) }}"
+                                        style="width:100%;height:200px;" controls></video>
                                 @else
                                     <a href="{{ asset('storage/adjuntos/' . $adjunto->ruta) }}" target="_BLANK">
                                         <img src="{{ asset('storage/adjuntos/' . $adjunto->ruta) }}"
