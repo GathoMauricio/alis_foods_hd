@@ -5,7 +5,11 @@
         <h3>
             @can('crear_tickets')
                 <div style="float: right;">
-                    <a href="{{ route('crear_tickets') }}" class="btn btn-primary" title="Nuevo"><i class="icon icon-plus"></i></a>
+                    {{--  <a href="{{ route('crear_tickets') }}" class="btn btn-primary" title="Nuevo"><i class="icon icon-plus"></i></a>  --}}
+                    @foreach ($categorias as $categoria)
+                        <a href="{{ route('crear_tickets', $categoria->id) }}" class="btn btn-primary"
+                            title="Nuevo ticket de tipo {{ $categoria->nombre }}">{{ $categoria->nombre }}</a>
+                    @endforeach
                 </div>
             @endcan
             Tickets

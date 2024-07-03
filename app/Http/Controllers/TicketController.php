@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Ticket;
 use App\Models\Categoria;
+use App\Models\Subcategoria;
 use App\Models\User;
 use App\Models\TicketEstatus;
 use App\Models\Adjunto;
@@ -52,8 +53,8 @@ class TicketController extends Controller
         if (Auth::user()->hasRole('Super usuario')) {
             $tickets = Ticket::where('estatus_id', '!=', 5)->orderBy('id', 'DESC')->paginate(15);
         }
-
-        return view('tickets.index', compact('tickets'));
+        $categorias = Categoria::orderBy('nombre')->get();
+        return view('tickets.index', compact('tickets', 'categorias'));
     }
 
     public function historico()
@@ -104,10 +105,12 @@ class TicketController extends Controller
         return view('tickets.show', compact('ticket', 'tecnicos', 'estatuses'));
     }
 
-    public function create()
+    public function create($id)
     {
-        $categorias = Categoria::orderBy('nombre')->get();
-        return view('tickets.create', compact('categorias'));
+        //$categorias = Categoria::orderBy('nombre')->get();
+        $categoria = Categoria::findOrFail($id);
+        $subcategorias = Subcategoria::where('categoria_id', $id)->orderBy('nombre')->get();
+        return view('tickets.create', compact('categoria', 'subcategorias'));
     }
 
     public function store(Request $request)
