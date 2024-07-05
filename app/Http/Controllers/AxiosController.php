@@ -33,4 +33,10 @@ class AxiosController extends Controller
         $sugerencias = Sugerencia::where('sintoma_id', $request->sintoma_id)->get();
         return response()->json(['sugerencias' => $sugerencias]);
     }
+
+    public function cargarSintoma(Request $request)
+    {
+        $sintoma = Sintoma::find($request->sintoma_id);
+        return response()->json($sintoma);
+    }
 }

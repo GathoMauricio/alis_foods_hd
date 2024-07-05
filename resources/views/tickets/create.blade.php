@@ -144,7 +144,7 @@
 
         function cargarSubcategorias(categoria_id) {
             if (categoria_id.length > 0) {
-                axios.get('cargar_subcategorias', {
+                axios.get("{{ route('cargar_subcategorias') }}", {
                         params: {
                             categoria_id: categoria_id
                         }

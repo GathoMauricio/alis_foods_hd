@@ -33,4 +33,19 @@ class ServicioController extends Controller
             return redirect()->back()->with('message', 'Registro creado');
         }
     }
+
+    public function updateSintoma(Request $request)
+    {
+        $request->validate([
+            'nombre' => 'required',
+            'tiempo_respuesta' => 'required',
+            'tiempo_solucion' => 'required',
+        ]);
+
+        $sintoma = Sintoma::find($request->sintoma_id);
+
+        if ($sintoma->update($request->all())) {
+            return redirect()->back()->with('message', 'Registro actualizado');
+        }
+    }
 }
