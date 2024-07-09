@@ -89,6 +89,10 @@ class TicketController extends Controller
                 ->paginate(15);
         }
 
+        if (Auth::user()->hasRole('Super usuario')) {
+            $tickets = Ticket::where('estatus_id',  5)->orderBy('id', 'DESC')->paginate(15);
+        }
+
         return view('tickets.historico', compact('tickets'));
     }
 
