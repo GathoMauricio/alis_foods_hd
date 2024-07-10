@@ -71,6 +71,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('distrital', [App\Http\Controllers\DistritalSucursalController::class, 'index'])->name('distrital')->middleware('distrital');
     Route::get('show_distrital/{id}', [App\Http\Controllers\DistritalSucursalController::class, 'show'])->name('show_distrital')->middleware('distrital');
     Route::get('historico_distrital', [App\Http\Controllers\DistritalSucursalController::class, 'historico'])->name('historico_distrital')->middleware('distrital');
+    //Reportes
+    Route::get('reportes', [App\Http\Controllers\ReporteController::class, 'index'])->name('reportes');
+    Route::post('generar_reporte', [App\Http\Controllers\ReporteController::class, 'generarReporte'])->name('generar_reporte');
 });
 
 

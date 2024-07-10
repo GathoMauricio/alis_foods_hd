@@ -100,6 +100,9 @@
                                             Histórico
                                         </a>
                                     @endif
+                                    <a class="dropdown-item" href="{{ route('reportes') }}">
+                                        Reportes
+                                    </a>
                                     @can('modulo_roles_permisos')
                                         <a class="dropdown-item" href="{{ route('roles_permisos') }}">
                                             Roles y permisos
