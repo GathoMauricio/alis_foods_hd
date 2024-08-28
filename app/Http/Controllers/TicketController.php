@@ -24,7 +24,23 @@ class TicketController extends Controller
             $tickets = Ticket::where('estatus_id', '!=', 5)->where('autor_id', Auth::user()->id)->orderBy('id', 'DESC')->paginate(15);
         }
 
-        if (Auth::user()->hasRole('Técnico')) {
+        // if (Auth::user()->hasRole('Técnico')) {
+        //     $tickets = Ticket::select('tickets.*')
+        //         ->leftjoin('sintomas', 'tickets.sintoma_id', 'sintomas.id')
+        //         ->leftjoin('servicios', 'sintomas.servicio_id', 'servicios.id')
+        //         ->leftjoin('subcategorias', 'servicios.subcategoria_id', 'subcategorias.id')
+        //         ->leftjoin('categorias', 'subcategorias.categoria_id', 'categorias.id')
+        //         ->where('tickets.estatus_id', '!=', 5)
+        //         ->where('categorias.id', Auth::user()->categoria_id)
+        //         ->orderBy('tickets.id', 'DESC')
+        //         ->paginate(15);
+        // }
+
+        // if (Auth::user()->hasRole('Administrador')) {
+        //     $tickets = Ticket::where('estatus_id', '!=', 5)->orderBy('id', 'DESC')->paginate(15);
+        // }
+
+        if (Auth::user()->hasRole('Administrador') || Auth::user()->hasRole('Técnico')) {
             $tickets = Ticket::select('tickets.*')
                 ->leftjoin('sintomas', 'tickets.sintoma_id', 'sintomas.id')
                 ->leftjoin('servicios', 'sintomas.servicio_id', 'servicios.id')
@@ -35,21 +51,6 @@ class TicketController extends Controller
                 ->orderBy('tickets.id', 'DESC')
                 ->paginate(15);
         }
-
-        if (Auth::user()->hasRole('Administrador')) {
-            $tickets = Ticket::where('estatus_id', '!=', 5)->orderBy('id', 'DESC')->paginate(15);
-        }
-
-        // if (Auth::user()->hasRole('Administrador') && Auth::user()->hasRole('Técnico')) {
-        //     $tickets = Ticket::select('tickets.*')->where('tickets.estatus_id', '!=', 5)
-        //         ->leftjoin('sintomas', 'tickets.sintoma_id', 'sintomas.id')
-        //         ->leftjoin('servicios', 'sintomas.servicio_id', 'servicios.id')
-        //         ->leftjoin('subcategorias', 'servicios.subcategoria_id', 'subcategorias.id')
-        //         ->leftjoin('categorias', 'subcategorias.categoria_id', 'categorias.id')
-        //         ->where('categorias.id', Auth::user()->categoria_id)
-        //         ->orderBy('tickets.id', 'DESC')
-        //         ->paginate(15);
-        // }
 
         if (Auth::user()->hasRole('Super usuario')) {
             $tickets = Ticket::where('estatus_id', '!=', 5)->orderBy('id', 'DESC')->paginate(15);
@@ -64,22 +65,22 @@ class TicketController extends Controller
             $tickets = Ticket::where('estatus_id',  5)->where('autor_id', Auth::user()->id)->orderBy('id', 'DESC')->paginate(15);
         }
 
-        if (Auth::user()->hasRole('Técnico')) {
-            $tickets = Ticket::where('estatus_id', 5)->where('tecnico_id', Auth::user()->id)->orderBy('id', 'DESC')->paginate(15);
-        }
+        // if (Auth::user()->hasRole('Técnico')) {
+        //     $tickets = Ticket::where('estatus_id', 5)->where('tecnico_id', Auth::user()->id)->orderBy('id', 'DESC')->paginate(15);
+        // }
 
-        if (Auth::user()->hasRole('Administrador')) {
-            $tickets = Ticket::select('tickets.*')->where('estatus_id',  5)
-                ->leftjoin('sintomas', 'tickets.sintoma_id', 'sintomas.id')
-                ->leftjoin('servicios', 'sintomas.servicio_id', 'servicios.id')
-                ->leftjoin('subcategorias', 'servicios.subcategoria_id', 'subcategorias.id')
-                ->leftjoin('categorias', 'subcategorias.categoria_id', 'categorias.id')
-                ->where('categorias.id', Auth::user()->categoria_id)
-                ->orderBy('tickets.id', 'DESC')
-                ->paginate(15);
-        }
+        // if (Auth::user()->hasRole('Administrador')) {
+        //     $tickets = Ticket::select('tickets.*')->where('estatus_id',  5)
+        //         ->leftjoin('sintomas', 'tickets.sintoma_id', 'sintomas.id')
+        //         ->leftjoin('servicios', 'sintomas.servicio_id', 'servicios.id')
+        //         ->leftjoin('subcategorias', 'servicios.subcategoria_id', 'subcategorias.id')
+        //         ->leftjoin('categorias', 'subcategorias.categoria_id', 'categorias.id')
+        //         ->where('categorias.id', Auth::user()->categoria_id)
+        //         ->orderBy('tickets.id', 'DESC')
+        //         ->paginate(15);
+        // }
 
-        if (Auth::user()->hasRole('Administrador') && Auth::user()->hasRole('Técnico')) {
+        if (Auth::user()->hasRole('Administrador') || Auth::user()->hasRole('Técnico')) {
             $tickets = Ticket::select('tickets.*')->where('estatus_id',  5)
                 ->leftjoin('sintomas', 'tickets.sintoma_id', 'sintomas.id')
                 ->leftjoin('servicios', 'sintomas.servicio_id', 'servicios.id')
