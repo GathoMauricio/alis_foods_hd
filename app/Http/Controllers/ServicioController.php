@@ -48,4 +48,17 @@ class ServicioController extends Controller
             return redirect()->back()->with('message', 'Registro actualizado');
         }
     }
+
+    public function updateSubcategoria(Request $request)
+    {
+        $request->validate([
+            'nombre' => 'required',
+        ]);
+
+        $subcategoria = Subcategoria::find($request->subcategoria_id);
+
+        if ($subcategoria->update($request->all())) {
+            return redirect()->back()->with('message', 'Registro actualizado');
+        }
+    }
 }

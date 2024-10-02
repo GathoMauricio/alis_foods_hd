@@ -20,13 +20,16 @@
                             Subcategorías
                             <br>
                             <a href="javascript:void();" onclick="nuevaSubcategoria({{ $categoria->id }});">
-                                Agregar
+                                Agregar servicio
                             </a>
                         </h6>
                     </div>
                     <ul>
                         @forelse ($categoria->subcategorias as $subcategoria)
                             <li>
+                                <i onclick="editarSubcategoria({{ $subcategoria->id }})" title="Editar subcategoria"
+                                    class="icon icon-pencil"
+                                    style="float:right;color:orange;padding-top:5px;cursor:pointer;"></i>
                                 <a href="{{ route('servicios', $subcategoria->id) }}">{{ $subcategoria->nombre }}
                                     ({{ count($subcategoria->servicios) }})
                                 </a>
@@ -41,6 +44,7 @@
     </div>
     @include('categorias.nueva_categoria')
     @include('categorias.nueva_subcategoria')
+    @include('categorias.editar_subcategoria')
 @endsection
 @section('custom_scripts')
     <script>
@@ -51,6 +55,22 @@
         function nuevaSubcategoria(categoria_id) {
             $("#txt_categoria_id").val(categoria_id);
             $("#nueva_subcategoria_modal").modal('show');
+        }
+
+        function editarSubcategoria(subcategoria_id) {
+            axios.get("{{ route('cargar_subcategoria') }}", {
+                    params: {
+                        subcategoria_id: subcategoria_id
+                    }
+                })
+                .then(response => {
+                    $("#txt_editar_subcategoria_id").val(subcategoria_id);
+                    $("#txt_editar_nombre_subcategoria").val(response.data.nombre);
+                    $("#editar_subcategoria_modal").modal('show');
+                })
+                .catch(error => {
+                    //console.log(error);
+                });
         }
     </script>
 @endsection

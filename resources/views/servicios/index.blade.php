@@ -63,7 +63,6 @@
         }
 
         function editarSintoma(sintoma_id) {
-            console.log(sintoma_id);
             axios.get("{{ route('cargar_sintoma') }}", {
                     params: {
                         sintoma_id: sintoma_id

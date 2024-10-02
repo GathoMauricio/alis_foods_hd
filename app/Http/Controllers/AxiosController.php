@@ -39,4 +39,10 @@ class AxiosController extends Controller
         $sintoma = Sintoma::find($request->sintoma_id);
         return response()->json($sintoma);
     }
+
+    public function cargarSubcategoria(Request $request)
+    {
+        $subcategoria = Subcategoria::find($request->subcategoria_id);
+        return response()->json($subcategoria);
+    }
 }

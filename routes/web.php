@@ -51,13 +51,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('cargar_sintomas', [App\Http\Controllers\AxiosController::class, 'cargarSintomas'])->name('cargar_sintomas');
     Route::get('cargar_sintoma', [App\Http\Controllers\AxiosController::class, 'cargarSintoma'])->name('cargar_sintoma');
     Route::get('cargar_sugerencia', [App\Http\Controllers\AxiosController::class, 'cargarSugerencia'])->name('cargar_sugerencia');
-
+    Route::get('cargar_subcategoria', [App\Http\Controllers\AxiosController::class, 'cargarSubcategoria'])->name('cargar_subcategoria');
     //Categorias
     Route::get('categorias', [App\Http\Controllers\CategoriaController::class, 'index'])->name('categorias');
     Route::post('store_categoria', [App\Http\Controllers\CategoriaController::class, 'storeCategoria'])->name('store_categoria');
     Route::post('store_subcategoria', [App\Http\Controllers\CategoriaController::class, 'storeSubcategoria'])->name('store_subcategoria');
 
     //Subcategorias
+    Route::put('update_subcategoria', [App\Http\Controllers\ServicioController::class, 'updateSubcategoria'])->name('update_subcategoria');
     Route::get('servicios/{id}', [App\Http\Controllers\ServicioController::class, 'index'])->name('servicios');
     Route::post('store_servicio', [App\Http\Controllers\ServicioController::class, 'storeServicio'])->name('store_servicio');
     Route::post('store_sintoma', [App\Http\Controllers\ServicioController::class, 'storeSintoma'])->name('store_sintoma');
@@ -77,8 +78,7 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 
-Route::any('/', function () {
-})->name('/');
+Route::any('/', function () {})->name('/');
 Route::get('/', function () {
     if (Auth::check()) {
         return redirect('home');
