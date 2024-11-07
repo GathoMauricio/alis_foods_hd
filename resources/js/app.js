@@ -7,7 +7,7 @@ $(document).ready(function () {
         const valor = $("#cbo_usuario_buscador").val();
         console.log(valor);
         if (valor.length > 0) {
-            window.location = "/home/" + valor;
+            window.location = "./home/" + valor;
         } else {
             errorNotification("Seleccione una opción del buscador");
         }
@@ -17,7 +17,7 @@ $(document).ready(function () {
         const valor = $("#cbo_usuario_buscador").val();
         console.log(valor);
         if (valor.length > 0) {
-            window.location = "/historico/" + valor;
+            window.location = "./historico/" + valor;
         } else {
             errorNotification("Seleccione una opción del buscador");
         }
