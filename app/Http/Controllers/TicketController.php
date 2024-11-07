@@ -14,31 +14,19 @@ use Illuminate\Support\Facades\Auth;
 class TicketController extends Controller
 {
 
-    public function index()
+    public function index($sucursal = null)
     {
         if (Auth::user()->distrital == 'SI') {
             return redirect('distrital');
         }
 
         if (Auth::user()->hasRole('Gerente')) {
-            $tickets = Ticket::where('estatus_id', '!=', 5)->where('autor_id', Auth::user()->id)->orderBy('id', 'DESC')->paginate(15);
+            $tickets = Ticket::where('estatus_id', '!=', 5)->where('autor_id', Auth::user()->id);
+            if ($sucursal) {
+                $tickets = $tickets->where('autor_id', $sucursal);
+            }
+            $tickest = $tickets->orderBy('id', 'DESC')->paginate(15);
         }
-
-        // if (Auth::user()->hasRole('Técnico')) {
-        //     $tickets = Ticket::select('tickets.*')
-        //         ->leftjoin('sintomas', 'tickets.sintoma_id', 'sintomas.id')
-        //         ->leftjoin('servicios', 'sintomas.servicio_id', 'servicios.id')
-        //         ->leftjoin('subcategorias', 'servicios.subcategoria_id', 'subcategorias.id')
-        //         ->leftjoin('categorias', 'subcategorias.categoria_id', 'categorias.id')
-        //         ->where('tickets.estatus_id', '!=', 5)
-        //         ->where('categorias.id', Auth::user()->categoria_id)
-        //         ->orderBy('tickets.id', 'DESC')
-        //         ->paginate(15);
-        // }
-
-        // if (Auth::user()->hasRole('Administrador')) {
-        //     $tickets = Ticket::where('estatus_id', '!=', 5)->orderBy('id', 'DESC')->paginate(15);
-        // }
 
         if (Auth::user()->hasRole('Administrador') || Auth::user()->hasRole('Técnico')) {
             $tickets = Ticket::select('tickets.*')
@@ -47,38 +35,36 @@ class TicketController extends Controller
                 ->leftjoin('subcategorias', 'servicios.subcategoria_id', 'subcategorias.id')
                 ->leftjoin('categorias', 'subcategorias.categoria_id', 'categorias.id')
                 ->where('tickets.estatus_id', '!=', 5)
-                ->where('categorias.id', Auth::user()->categoria_id)
-                ->orderBy('tickets.id', 'DESC')
+                ->where('categorias.id', Auth::user()->categoria_id);
+            if ($sucursal) {
+                $tickets = $tickets->where('autor_id', $sucursal);
+            }
+            $tickest = $tickets->orderBy('tickets.id', 'DESC')
                 ->paginate(15);
         }
 
         if (Auth::user()->hasRole('Super usuario')) {
-            $tickets = Ticket::where('estatus_id', '!=', 5)->orderBy('id', 'DESC')->paginate(15);
+            $tickets = Ticket::where('estatus_id', '!=', 5);
+            if ($sucursal) {
+                $tickets = $tickets->where('autor_id', $sucursal);
+            }
+            $tickets = $tickets->orderBy('id', 'DESC')->paginate(15);
         }
+
         $categorias = Categoria::orderBy('nombre')->get();
-        return view('tickets.index', compact('tickets', 'categorias'));
+        $usuarios = User::orderBy('name')->whereNotNull('sucursal_id')->get();
+        return view('tickets.index', compact('tickets', 'categorias', 'usuarios'));
     }
 
-    public function historico()
+    public function historico($sucursal = null)
     {
         if (Auth::user()->hasRole('Gerente')) {
-            $tickets = Ticket::where('estatus_id',  5)->where('autor_id', Auth::user()->id)->orderBy('id', 'DESC')->paginate(15);
+            $tickets = Ticket::where('estatus_id',  5)->where('autor_id', Auth::user()->id);
+            if ($sucursal) {
+                $tickets = $tickets->where('autor_id', $sucursal);
+            }
+            $tickets = $tickets->orderBy('id', 'DESC')->paginate(15);
         }
-
-        // if (Auth::user()->hasRole('Técnico')) {
-        //     $tickets = Ticket::where('estatus_id', 5)->where('tecnico_id', Auth::user()->id)->orderBy('id', 'DESC')->paginate(15);
-        // }
-
-        // if (Auth::user()->hasRole('Administrador')) {
-        //     $tickets = Ticket::select('tickets.*')->where('estatus_id',  5)
-        //         ->leftjoin('sintomas', 'tickets.sintoma_id', 'sintomas.id')
-        //         ->leftjoin('servicios', 'sintomas.servicio_id', 'servicios.id')
-        //         ->leftjoin('subcategorias', 'servicios.subcategoria_id', 'subcategorias.id')
-        //         ->leftjoin('categorias', 'subcategorias.categoria_id', 'categorias.id')
-        //         ->where('categorias.id', Auth::user()->categoria_id)
-        //         ->orderBy('tickets.id', 'DESC')
-        //         ->paginate(15);
-        // }
 
         if (Auth::user()->hasRole('Administrador') || Auth::user()->hasRole('Técnico')) {
             $tickets = Ticket::select('tickets.*')->where('estatus_id',  5)
@@ -86,16 +72,25 @@ class TicketController extends Controller
                 ->leftjoin('servicios', 'sintomas.servicio_id', 'servicios.id')
                 ->leftjoin('subcategorias', 'servicios.subcategoria_id', 'subcategorias.id')
                 ->leftjoin('categorias', 'subcategorias.categoria_id', 'categorias.id')
-                ->where('categorias.id', Auth::user()->categoria_id)
-                ->orderBy('tickets.id', 'DESC')
+                ->where('categorias.id', Auth::user()->categoria_id);
+            if ($sucursal) {
+                $tickets = $tickets->where('autor_id', $sucursal);
+            }
+            $tickets = $tickets->orderBy('tickets.id', 'DESC')
                 ->paginate(15);
         }
 
         if (Auth::user()->hasRole('Super usuario')) {
-            $tickets = Ticket::where('estatus_id',  5)->orderBy('id', 'DESC')->paginate(15);
+            $tickets = Ticket::where('estatus_id',  5);
+            if ($sucursal) {
+                $tickets = $tickets->where('autor_id', $sucursal);
+            }
+            $tickets = $tickets->orderBy('id', 'DESC')->paginate(15);
         }
 
-        return view('tickets.historico', compact('tickets'));
+        $usuarios = User::orderBy('name')->whereNotNull('sucursal_id')->get();
+
+        return view('tickets.historico', compact('tickets', 'usuarios'));
     }
 
     public function show($id)

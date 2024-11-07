@@ -15,6 +15,28 @@
             Tickets
         </h3>
         {{ $tickets->links('pagination::bootstrap-4') }}
+        <form id="form_buscador">
+            <div class="container">
+                <div style="float:right;">
+                    <table>
+                        <tr>
+                            <td>
+                                <select id="cbo_usuario_buscador" class="form-control">
+                                    <option value>--Seleccione una opcion--</option>
+                                    @foreach ($usuarios as $usuario)
+                                        <option value="{{ $usuario->id }}">{{ $usuario->name }} {{ $usuario->apaterno }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary">Buscar</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </form>
         <table class="table">
             <thead>
                 <tr>
