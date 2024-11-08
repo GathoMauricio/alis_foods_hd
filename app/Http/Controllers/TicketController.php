@@ -25,7 +25,7 @@ class TicketController extends Controller
             if ($sucursal) {
                 $tickets = $tickets->where('autor_id', $sucursal);
             }
-            $tickest = $tickets->orderBy('id', 'DESC')->paginate(15);
+            $tickest = $tickets->orderBy('id', 'DESC'); //->paginate(15);
         }
 
         if (Auth::user()->hasRole('Administrador') || Auth::user()->hasRole('Técnico')) {
@@ -39,7 +39,7 @@ class TicketController extends Controller
             if ($sucursal) {
                 $tickets = $tickets->where('tickets.autor_id', $sucursal);
             }
-            $tickets = $tickets->orderBy('id', 'DESC')->paginate(15);
+            $tickets = $tickets->orderBy('id', 'DESC'); //->paginate(15);
         }
 
         if (Auth::user()->hasRole('Super usuario')) {
@@ -47,7 +47,7 @@ class TicketController extends Controller
             if ($sucursal) {
                 $tickets = $tickets->where('autor_id', $sucursal);
             }
-            $tickets = $tickets->orderBy('id', 'DESC')->paginate(15);
+            $tickets = $tickets->orderBy('id', 'DESC'); //->paginate(15);
         }
 
         $categorias = Categoria::orderBy('nombre')->get();
@@ -62,7 +62,7 @@ class TicketController extends Controller
             if ($sucursal) {
                 $tickets = $tickets->where('autor_id', $sucursal);
             }
-            $tickets = $tickets->orderBy('id', 'DESC')->paginate(15);
+            $tickets = $tickets->orderBy('id', 'DESC'); //->paginate(15);
         }
 
         if (Auth::user()->hasRole('Administrador') || Auth::user()->hasRole('Técnico')) {
@@ -75,8 +75,7 @@ class TicketController extends Controller
             if ($sucursal) {
                 $tickets = $tickets->where('autor_id', $sucursal);
             }
-            $tickets = $tickets->orderBy('tickets.id', 'DESC')
-                ->paginate(15);
+            $tickets = $tickets->orderBy('tickets.id', 'DESC'); //->paginate(15);
         }
 
         if (Auth::user()->hasRole('Super usuario')) {
@@ -84,7 +83,7 @@ class TicketController extends Controller
             if ($sucursal) {
                 $tickets = $tickets->where('autor_id', $sucursal);
             }
-            $tickets = $tickets->orderBy('id', 'DESC')->paginate(15);
+            $tickets = $tickets->orderBy('id', 'DESC'); //->paginate(15);
         }
 
         $usuarios = User::orderBy('name')->whereNotNull('sucursal_id')->get();

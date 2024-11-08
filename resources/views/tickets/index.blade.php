@@ -14,7 +14,7 @@
             @endcan
             Tickets
         </h3>
-        {{ $tickets->links('pagination::bootstrap-4') }}
+        {{--  {{ $tickets->links('pagination::bootstrap-4') }}  --}}
         <form id="form_buscador">
             <div class="container">
                 <div style="float:right;">

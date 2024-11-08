@@ -5,7 +5,7 @@
         <h3>
             Histórico
         </h3>
-        {{ $tickets->links('pagination::bootstrap-4') }}
+        {{--  {{ $tickets->links('pagination::bootstrap-4') }}  --}}
         <form id="form_buscador_historico">
             <div class="container">
                 <div style="float:right;">
