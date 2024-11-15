@@ -25,7 +25,7 @@ class TicketController extends Controller
             if ($sucursal) {
                 $tickets = $tickets->where('autor_id', $sucursal);
             }
-            $tickest = $tickets->orderBy('id', 'DESC')->paginate(15);
+            $tickets = $tickets->orderBy('id', 'DESC')->paginate(15);
         }
 
         if (Auth::user()->hasRole('Administrador') || Auth::user()->hasRole('Técnico')) {

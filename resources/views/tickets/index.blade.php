@@ -14,7 +14,8 @@
             @endcan
             Tickets
         </h3>
-        {{--  {{ $tickets->links('pagination::bootstrap-4') }}  --}}
+        {{ $tickets->links('pagination::bootstrap-4') }}
+        @if (Auth::user()->hasRole('Administrador') || Auth::user()->hasRole('Técnico'))
         <form id="form_buscador">
             <div class="container">
                 <div style="float:right;">
@@ -37,6 +38,7 @@
                 </div>
             </div>
         </form>
+        @endif
         <table class="table">
             <thead>
                 <tr>
