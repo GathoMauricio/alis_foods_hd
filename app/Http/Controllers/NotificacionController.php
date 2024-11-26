@@ -17,7 +17,7 @@ class NotificacionController extends Controller
             });
         } catch (\Exception $e) {
             \Log::debug($e->getMessage());
-            \Log::debug("Error al enviar notificación email: " . $emails . " tipo: " . $subject . " Data: " . $data);
+            //\Log::debug("Error al enviar notificación email: " . $emails . " tipo: " . $subject . " Data: " . $data);
         }
     }
 }

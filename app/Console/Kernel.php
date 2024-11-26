@@ -24,7 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('dump:mysql')->everyFiveMinutes();
+        //$schedule->command('dump:mysql')->everyFiveMinutes();
     }
 
     /**
