@@ -19,7 +19,7 @@ class TicketController extends Controller
         if (Auth::user()->distrital == 'SI') {
             return redirect('distrital');
         }
-
+        $tickets = Ticket::where('id', 0)->paginate(1);
         if (Auth::user()->hasRole('Gerente')) {
             $tickets = Ticket::where('estatus_id', '!=', 5)->where('autor_id', Auth::user()->id);
             if ($sucursal) {
@@ -50,6 +50,11 @@ class TicketController extends Controller
             $tickets = $tickets->orderBy('id', 'DESC')->paginate(15);
         }
 
+        if (Auth::user()->hasRole('programador de trabajos')) {
+            $tickets = Ticket::where('estatus_id', '!=', 5)->where('mantenimiento', 'SI');
+            $tickets = $tickets->orderBy('id', 'DESC')->paginate(15);
+        }
+
         $categorias = Categoria::orderBy('nombre')->get();
         $usuarios = User::orderBy('name')->whereNotNull('sucursal_id')->get();
         return view('tickets.index', compact('tickets', 'categorias', 'usuarios'));
@@ -57,6 +62,7 @@ class TicketController extends Controller
 
     public function historico($sucursal = null)
     {
+        $tickets = Ticket::where('id', 0)->paginate(1);
         if (Auth::user()->hasRole('Gerente')) {
             $tickets = Ticket::where('estatus_id',  5)->where('autor_id', Auth::user()->id);
             if ($sucursal) {
@@ -87,6 +93,11 @@ class TicketController extends Controller
             $tickets = $tickets->orderBy('id', 'DESC')->paginate(15);
         }
 
+        if (Auth::user()->hasRole('programador de trabajos')) {
+            $tickets = Ticket::where('estatus_id', 5)->where('mantenimiento', 'SI');
+            $tickets = $tickets->orderBy('id', 'DESC')->paginate(15);
+        }
+
         $usuarios = User::orderBy('name')->whereNotNull('sucursal_id')->get();
 
         return view('tickets.historico', compact('tickets', 'usuarios'));
@@ -106,7 +117,8 @@ class TicketController extends Controller
         //$categorias = Categoria::orderBy('nombre')->get();
         $categoria = Categoria::findOrFail($id);
         $subcategorias = Subcategoria::where('categoria_id', $id)->orderBy('nombre')->get();
-        return view('tickets.create', compact('categoria', 'subcategorias'));
+        $sucursales = User::orderBy('name')->whereNotNull('sucursal_id')->get();
+        return view('tickets.create', compact('categoria', 'subcategorias', 'sucursales'));
     }
 
     public function store(Request $request)
@@ -126,16 +138,25 @@ class TicketController extends Controller
             'descripcion.required' => 'Este campo es obligatorio',
         ]);
 
+        if ($request->sucursal_id) {
+            $autor_id = $request->sucursal_id;
+            $mantenimiento = 'SI';
+        } else {
+            $autor_id = Auth::user()->id;
+            $mantenimiento = 'NO';
+        }
+
         $ticket = Ticket::create([
             'estatus_id' => 1,
             'sintoma_id' => $request->sintoma_id,
-            'autor_id' => Auth::user()->id,
+            'autor_id' => $autor_id,
             'tecnico_id' => null,
             'folio' => $this->generaFolio(),
             'descripcion' => $request->descripcion,
             'sla' => null,
             'proceso_at' => null,
-            'cerrado_at' => null
+            'cerrado_at' => null,
+            'mantenimiento' => $mantenimiento,
         ]);
 
 

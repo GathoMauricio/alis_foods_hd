@@ -28,6 +28,7 @@ class Ticket extends Model
         'proceso_at',
         'cerrado_at',
         'finalizado_at',
+        'mantenimiento',
     ];
 
     public function estatus()

@@ -57,6 +57,22 @@
                     </div>
                 </div>
             </div>
+            @if (Auth::user()->hasRole('programador de trabajos'))
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="sucursal_id" style="font-weight:bold;">Sucursal</label>
+                            <select name="sucursal_id" class="form-select select2" required>
+                                <option value>--Seleccione--</option>
+                                @foreach ($sucursales as $sucursal)
+                                    <option value="{{ $sucursal->id }}">{{ $sucursal->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            @endif
             <br>
             <div class="row">
                 <div class="col-md-6">
