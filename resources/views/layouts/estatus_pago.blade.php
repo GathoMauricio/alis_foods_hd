@@ -4,10 +4,10 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Servicio Suspendido</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Aviso</h5>
             </div>
             <div class="modal-body">
-                El servicio se encuentra temporalmente suspendio.
+                El servicio está apunto de ser suspendido.
                 <br>
                 Favor de revisar el estado de su facturación ya que su estado de cuenta presenta un adeudo.
             </div>
