@@ -169,7 +169,6 @@
             </style>
         @endauth
     </div>
-    @include('layouts.estatus_pago')
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
         crossorigin="anonymous"></script>
@@ -179,19 +178,6 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ asset('js/alertify.js') }}" defer></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script>
-        $(document).ready(function() {
-            var modalOptions = {
-                backdrop: 'static', // Evita que se cierre al hacer clic fuera
-                keyboard: false // Evita que se cierre con la tecla ESC
-            };
-            // Inicializar el modal con opciones
-            var modal = new bootstrap.Modal($('#modal_estatus_pago')[0], modalOptions);
-
-            // Mostrar el modal
-            modal.show();
-        });
-    </script>
     @yield('custom_scripts')
 </body>
 

@@ -63,4 +63,20 @@
             </div>
         </div>
     </div>
+    @include('layouts.estatus_pago')
+@endsection
+@section('custom_scripts')
+    <script>
+        $(document).ready(function() {
+            var modalOptions = {
+                backdrop: 'static', // Evita que se cierre al hacer clic fuera
+                keyboard: false // Evita que se cierre con la tecla ESC
+            };
+            // Inicializar el modal con opciones
+            var modal = new bootstrap.Modal($('#modal_estatus_pago')[0], modalOptions);
+
+            // Mostrar el modal
+            modal.show();
+        });
+    </script>
 @endsection
